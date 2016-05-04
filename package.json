@@ -1,0 +1,19 @@
+{
+  "name": "tbd",
+  "version": "1.0.0",
+  "description": "Style app to help users look their best",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrew-travis-wadman/TBD.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrew-travis-wadman/TBD/issues"
+  },
+  "homepage": "https://github.com/andrew-travis-wadman/TBD#readme"
+}
