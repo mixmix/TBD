@@ -4,10 +4,10 @@ var path = require('path')
 var passport = require('passport')
 
 /* GET users listing. */
-router.get('auth/facebook',
+router.get('/facebook',
   passport.authenticate('facebook', { scope: ['email'] }));
 
-router.get('auth/facebook/callback',
+router.get('/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     req.session.userId = req.user.dbid

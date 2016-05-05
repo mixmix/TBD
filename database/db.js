@@ -26,7 +26,7 @@ module.exports = {
               .insert(Object.assign({},user, {styleRating: 0, connoisseurRating: 0}))
               .then(function(result){
                 knex('users').where(user)
-                  .then(function(resultUser){ cb(resultUser[0])})
+                  .then(function(resultUser){ cb(resultUser)})
               })
           }
         })
@@ -36,5 +36,8 @@ module.exports = {
   },
   getUserPhotos: function(user){
     return knex('photos').where(user)
+  },
+  getUser: function(user){
+    return knex('users').where(user)
   }
 }
