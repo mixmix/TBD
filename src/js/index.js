@@ -15,6 +15,7 @@ import Feedcontainer  from './components/pages/feedcontainer'
 import Imagepage      from './components/pages/imagepage'
 import Profile        from './components/pages/profile'
 import Location       from './components/pages/location'
+import Login          from './components/pages/login'
 
 const store = createStore(reducer)
 const history = syncHistoryWithStore(hashHistory, store)
@@ -36,6 +37,7 @@ class App extends Component{
            <Route path="photo/:id" component={Imagepage}></Route>
            <Route path="profile" component={Profile}></Route>
            <Route path='location' component={Location}></Route>
+           <Route path='login' component={Login}></Route>
          </Route>
        </Router>
      </Provider>

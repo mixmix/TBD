@@ -12,6 +12,7 @@ export default class Nav extends Component{
       <Link to='/' class={indexActive}>feeds</Link>
       <Link to='profile' class={profileActive}>profile</Link>
       <Link to='location' class={locationActive}>location</Link>
+      <Link to='login' >login</Link>
      </nav>
    )
  }
