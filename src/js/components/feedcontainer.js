@@ -7,7 +7,7 @@ class FeedContainer extends Component{
  render(){
    const { feeds } = this.props
    return (
-     <div>
+     <div className="feed-container">
         {feeds.slice(0,4).map(feed => <Feed key={feed.id} {...feed}/>)}
      </div>
    )

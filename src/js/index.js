@@ -1,9 +1,11 @@
 
+//import the stylesheets
+import '../style/index.scss'
 //import the libs
 import React,{Component}       from 'react'
 import {render}                from 'react-dom'
 import { Provider }            from 'react-redux'
-import { Router, Route, IndexRoute, hashHistory } from "react-router";
+import { Router, Route, IndexRoute, browserHistory } from "react-router";
 import { syncHistoryWithStore} from 'react-router-redux'
 import { createStore }         from 'redux'
 //import the reducer
@@ -16,10 +18,25 @@ import Profile        from './components/profile'
 import Location       from './components/location'
 
 const store = createStore(reducer)
-const history = syncHistoryWithStore(hashHistory, store)
+const history = syncHistoryWithStore(browserHistory, store)
 
 
-
+let fakeState = {
+  images: [
+    {
+      link: "http://i.imgur.com/R2tE1Wg.jpg?1"
+    },
+    {
+      link: "http://i.imgur.com/R2tE1Wg.jpg?1"
+    },
+    {
+      link: "http://i.imgur.com/R2tE1Wg.jpg?1"
+    },
+    {
+      link: "http://i.imgur.com/R2tE1Wg.jpg?1"
+    }
+  ]
+}
 
 class App extends Component{
  render(){
