@@ -4,7 +4,8 @@
   "description": "Style app to help users look their best",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "file-loader": "^0.8.5",
     "node-sass": "^3.7.0",
     "react": "0.14.1",
+    "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",
     "react-router": "1.0.3",
     "react-router-redux": "^4.0.4",

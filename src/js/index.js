@@ -1,3 +1,4 @@
+
 //import the libs
 import React,{Component}       from 'react'
 import {render}                from 'react-dom'
@@ -19,6 +20,23 @@ const store = createStore(reducer)
 const history = syncHistoryWithStore(browserHistory, store)
 
 
+let fakeState = {
+  images: [
+    {
+      link: "http://i.imgur.com/R2tE1Wg.jpg?1"
+    },
+    {
+      link: "http://i.imgur.com/R2tE1Wg.jpg?1"
+    },
+    {
+      link: "http://i.imgur.com/R2tE1Wg.jpg?1"
+    },
+    {
+      link: "http://i.imgur.com/R2tE1Wg.jpg?1"
+    }
+  ]
+}
+
 class App extends Component{
  render(){
    return (
@@ -36,4 +54,4 @@ class App extends Component{
  }
 }
 
-render(<App name='Ollie'/>, document.getElementById('app'))
+render(<App />, document.getElementById('app'))
