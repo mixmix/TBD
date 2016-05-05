@@ -12,23 +12,25 @@ import request                 from 'superagent'
 //import the reducer
 import reducer        from './reducers'
 //import the components
-import Layout         from './components/layout'
-import Feedcontainer  from './components/feedcontainer'
-import Imagepage      from './components/imagepage'
-import Profile        from './components/profile'
-import Location       from './components/location'
-import Landing        from './components/landing.js'
+import Layout         from './components/pages/layout'
+import Feedcontainer  from './components/pages/feedcontainer'
+import Imagepage      from './components/pages/imagepage'
+import Profile        from './components/pages/profile'
+import Location       from './components/pages/location'
+import Login          from './components/pages/login'
+
 
 const store = createStore(reducer)
 const history = syncHistoryWithStore(hashHistory, store)
 
 class App extends Component{
- // componentDidMount(){
- //   request.get('/getfeed')
- //          .end((feeds)=>{
- //            store.dispatch({type:'LOAD_FEEDS',feeds})
- //          })
- // }
+ componentDidMount(){
+   request.get('/getFeed')
+          .end((err,feeds)=>{
+            feeds=JSON.parse(feeds.text)
+            store.dispatch({type:'LOAD_FEEDS',feeds})
+          })
+ }
  render(){
    return (
      <Provider store={store}>
@@ -38,6 +40,7 @@ class App extends Component{
            <Route path="photo/:id" component={Imagepage}></Route>
            <Route path="profile" component={Profile}></Route>
            <Route path='location' component={Location}></Route>
+           <Route path='login' component={Login}></Route>
          </Route>
        </Router>
      </Provider>
