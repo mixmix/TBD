@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import Nav from './nav'
+import Nav from '../nav'
 
 export default class Layout extends Component{
  render(){

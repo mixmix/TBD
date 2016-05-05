@@ -10,22 +10,23 @@ import request                 from 'superagent'
 //import the reducer
 import reducer        from './reducers'
 //import the components
-import Layout         from './components/layout'
-import Feedcontainer  from './components/feedcontainer'
-import Imagepage      from './components/imagepage'
-import Profile        from './components/profile'
-import Location       from './components/location'
+import Layout         from './components/pages/layout'
+import Feedcontainer  from './components/pages/feedcontainer'
+import Imagepage      from './components/pages/imagepage'
+import Profile        from './components/pages/profile'
+import Location       from './components/pages/location'
 
 const store = createStore(reducer)
 const history = syncHistoryWithStore(hashHistory, store)
 
 class App extends Component{
- // componentDidMount(){
- //   request.get('/getfeed')
- //          .end((feeds)=>{
- //            store.dispatch({type:'LOAD_FEEDS',feeds})
- //          })
- // }
+ componentDidMount(){
+   request.get('/getFeed')
+          .end((err,feeds)=>{
+            feeds=JSON.parse(feeds.text)
+            store.dispatch({type:'LOAD_FEEDS',feeds})
+          })
+ }
  render(){
    return (
      <Provider store={store}>
