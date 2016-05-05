@@ -1,4 +1,7 @@
 import React,{Component} from 'react'
+import { connect } from 'react-redux'
+// components
+import Feed  from './feed'
 
 export default class FeedContainer extends Component{
  render(){
@@ -9,3 +12,16 @@ export default class FeedContainer extends Component{
    )
  }
 }
+
+// const mapStateToProps = (state) => {
+//   return {
+//     feeds : state.feeds
+//   }
+// }
+
+// export for test
+export {FeedContainer}
+//
+// export default connect({
+//   mapStateToProps
+// })(FeedContainer)

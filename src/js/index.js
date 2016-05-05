@@ -3,7 +3,7 @@
 import React,{Component}       from 'react'
 import {render}                from 'react-dom'
 import { Provider }            from 'react-redux'
-import { Router, Route, IndexRoute, browserHistory } from "react-router";
+import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import { syncHistoryWithStore} from 'react-router-redux'
 import { createStore }         from 'redux'
 //import the reducer
@@ -16,7 +16,7 @@ import Profile        from './components/profile'
 import Location       from './components/location'
 
 const store = createStore(reducer)
-const history = syncHistoryWithStore(browserHistory, store)
+const history = syncHistoryWithStore(hashHistory, store)
 
 
 let fakeState = {
