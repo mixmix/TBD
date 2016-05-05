@@ -8,6 +8,7 @@ import { Provider }            from 'react-redux'
 import { Router, Route, IndexRoute, browserHistory } from "react-router";
 import { syncHistoryWithStore} from 'react-router-redux'
 import { createStore }         from 'redux'
+import request                 from 'superagent'
 //import the reducer
 import reducer        from './reducers'
 //import the components
@@ -19,27 +20,15 @@ import Location       from './components/location'
 import Landing        from './components/landing.js'
 
 const store = createStore(reducer)
-const history = syncHistoryWithStore(browserHistory, store)
-
-
-let fakeState = {
-  images: [
-    {
-      link: "http://i.imgur.com/R2tE1Wg.jpg?1"
-    },
-    {
-      link: "http://i.imgur.com/R2tE1Wg.jpg?1"
-    },
-    {
-      link: "http://i.imgur.com/R2tE1Wg.jpg?1"
-    },
-    {
-      link: "http://i.imgur.com/R2tE1Wg.jpg?1"
-    }
-  ]
-}
+const history = syncHistoryWithStore(hashHistory, store)
 
 class App extends Component{
+ // componentDidMount(){
+ //   request.get('/getfeed')
+ //          .end((feeds)=>{
+ //            store.dispatch({type:'LOAD_FEEDS',feeds})
+ //          })
+ // }
  render(){
    return (
      <Provider store={store}>
