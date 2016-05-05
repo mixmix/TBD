@@ -21,8 +21,12 @@ module.exports = {
         test: /\.scss$/,
         loaders: ["style", "css", "sass"]
       },
-      { test: /\.(png|jpg)$/,
+      { test: /\.(png|jpg|svg)$/,
         loader: 'file-loader'
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline'
       },
       { test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|ico)$/,
         loader: 'url?limit=10000'

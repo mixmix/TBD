@@ -16,6 +16,7 @@ import Feedcontainer  from './components/feedcontainer'
 import Imagepage      from './components/imagepage'
 import Profile        from './components/profile'
 import Location       from './components/location'
+import Landing        from './components/landing.js'
 
 const store = createStore(reducer)
 const history = syncHistoryWithStore(browserHistory, store)
