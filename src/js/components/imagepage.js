@@ -11,6 +11,10 @@ export default class ImagePage extends Component{
    return (
      <div>
         <img src={feed.imagelink} />
+        <div>
+          <button>Pass</button>
+          <button>On Fleek</button>
+        </div>
      </div>
    )
  }
