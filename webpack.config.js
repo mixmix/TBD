@@ -31,7 +31,7 @@ module.exports = {
   },
   output: {
     path: __dirname + "/public/",
-    filename: "client.min.js",
+    filename: "bundle.js",
     publicPath: "/public/"
   },
   plugins: debug ? [] : [
