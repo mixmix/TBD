@@ -3,16 +3,14 @@ var knexConfig = require(__dirname + '/../knexfile');
 
 var knex = Knex(knexConfig[process.env.NODE_ENV || 'development'])
 
-
-
 module.exports = {
   getUsers: function() {
     return knex.select().table('users')
   },
-  getImages: function() {
+  getPhotos: function() {
     return knex.select().table('photos')
   },
-  getImagesByDate: function() {
+  getPhotosByDate: function() {
     return knex.select().table('photos').orderBy('created_at','desc')
   },
   close: function() {
@@ -24,11 +22,19 @@ module.exports = {
           if (result.length > 0) {
             cb(result[0])
           } else {
-            knex('users').insert(Object.assign({},user, {styleRating: 0, connoisseurRating: 0})).then(function(result){
-              knex('users').where(user).then(function(resultUser){ cb(resultUser[0])})
-            })
+            knex('users')
+              .insert(Object.assign({},user, {styleRating: 0, connoisseurRating: 0}))
+              .then(function(result){
+                knex('users').where(user)
+                  .then(function(resultUser){ cb(resultUser[0])})
+              })
           }
         })
-    }
-
+  },
+  getVotes: function() {
+    return knex('votes')
+  },
+  getUserPhotos: function(user){
+    return knex('photos').where(user)
+  }
 }

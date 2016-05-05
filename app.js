@@ -24,6 +24,7 @@ var FacebookStrategy = require('passport-facebook')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
+var test = require('./routes/test');
 var app = express();
 
 // view engine setup
@@ -85,6 +86,7 @@ passport.deserializeUser(function(obj, cb) {
 app.use('/', routes);
 app.use('/users', users);
 app.use('/auth', auth)
+app.use('/test', test)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
