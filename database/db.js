@@ -24,8 +24,8 @@ module.exports = {
           if (result.length > 0) {
             cb(result[0])
           } else {
-            knex('users').insert(Object.assign({},user, {styleRating: 0, connoisseurRating: 0})).then(function(result){
-              knex('users').where(user).then(function(resultUser){ cb(resultUser[0])})
+            knex('users').insert(Object.assign({}, user, {styleRating: 0, connoisseurRating: 0})).then(function(result){
+              knex('users').where(user).then(function(resultUser){ cb(resultUser)})
             })
           }
         })
