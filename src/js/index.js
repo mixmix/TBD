@@ -5,7 +5,6 @@ import {render}                from 'react-dom'
 import { Provider }            from 'react-redux'
 import { Router, Route, IndexRoute, browserHistory } from "react-router";
 import { syncHistoryWithStore} from 'react-router-redux'
-import { Provider }            from 'react-redux'
 import { createStore }         from 'redux'
 //import the reducer
 import reducer        from './reducers'

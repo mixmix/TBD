@@ -1,10 +1,10 @@
 import React,{Component} from 'react'
 
-export default class FeedContainer extends Component{
+export default class Location extends Component{
  render(){
    return (
      <div>
-        this is the feed container dfdfd
+       this is location
      </div>
    )
  }
