@@ -4,9 +4,10 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('country');
     table.string('city');
-    table.string('email');
     table.string('link');
+    table.string('caption');
     table.integer('userId');
+    table.integer('categoryId');
     table.integer('rating');
     table.timestamps();
   })
