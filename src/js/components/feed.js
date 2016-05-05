@@ -11,15 +11,3 @@ export default class Feed extends Component{
    )
  }
 }
-
-// const mapDispatchToProps=(dispatch)=>{
-//   return {
-//     passPhoto:(comment)=>{
-//       dispatch(_passPhoto(comment))
-//     }
-//   }
-// }
-// export default connect(
-//   null,
-//   mapDispatchToProps
-// )(CommentForm)

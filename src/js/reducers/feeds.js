@@ -21,6 +21,9 @@ export default function (state=fakeState.images, action){
     case 'LOAD_FEEDS':
       return action.feeds
       break;
+    case 'PASS_PHOTO':
+      return state
+      break;
     default:
       return state
   }
