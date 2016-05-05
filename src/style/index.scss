@@ -1,6 +1,10 @@
+//reset css and import google fonts
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans|Alegreya:400,700");
+
+// set up colors and fonts
 @import './colors.scss';
+@import './fonts.scss';
 @import './nav.scss';
 
 * {
