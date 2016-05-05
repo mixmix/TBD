@@ -5,7 +5,7 @@ import Feed  from './feed'
 
 class FeedContainer extends Component{
  render(){
-   console.log('hhhhh',this.props)
+  //  console.log('props in feed container',this.props)
    const { feeds } = this.props
    return (
      <div className="feed-container">

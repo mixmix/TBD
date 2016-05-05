@@ -9,9 +9,9 @@ export default class Nav extends Component{
    let locationActive=location.pathname.match(/^\/location/)? 'active' : ''
    return (
      <nav>
-      <Link to='/' class={indexActive}>feeds</Link>
-      <Link to='profile' class={profileActive}>profile</Link>
-      <Link to='location' class={locationActive}>location</Link>
+      <Link to='/' class={indexActive}><span>feeds</span></Link>
+      <Link to='profile' class={profileActive}><span>profile</span></Link>
+      <Link to='location' class={locationActive}><span>location</span></Link>
      </nav>
    )
  }

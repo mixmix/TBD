@@ -1,5 +1,7 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans|Alegreya:400,700");
+@import './colors.scss';
+@import './nav.scss';
 
 * {
   box-sizing: border-box;
@@ -14,7 +16,7 @@
 
 body {
   font-size: 100%;
-  background-color: #ededed;
+  background-color: $light;
 }
 .feed-container {
   display: flex;
