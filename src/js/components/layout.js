@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import { Link } from "react-router";
 export default class Layout extends Component{
  render(){
+   console.log(this.props)
    return (
      <div>
       <Link to='/'>feeds</Link>
