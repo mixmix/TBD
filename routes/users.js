@@ -19,5 +19,9 @@ router.get('/getUserPhotos', function(req,res,next){
   }
 })
 
+router.post('/login', function(req,res,next){
+  res.send(req.body)
+})
+
 
 module.exports = router;
