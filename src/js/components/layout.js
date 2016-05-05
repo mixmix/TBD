@@ -1,14 +1,12 @@
 import React,{Component} from 'react'
-import { Link } from "react-router";
+import Nav from './nav'
+
 export default class Layout extends Component{
  render(){
-   console.log(this.props)
+   let {location}= this.props
    return (
      <div>
-      <Link to='/'>feeds</Link>
-      <Link to='profile'>profile</Link>
-      <Link to='location'>location</Link>
-      <Link to='photo/1'>foto</Link>
+       <Nav location={location}/>
        {this.props.children}
      </div>
    )

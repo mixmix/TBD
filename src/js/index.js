@@ -6,6 +6,7 @@ import { Provider }            from 'react-redux'
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import { syncHistoryWithStore} from 'react-router-redux'
 import { createStore }         from 'redux'
+import request                 from 'superagent'
 //import the reducer
 import reducer        from './reducers'
 //import the components
@@ -18,10 +19,13 @@ import Location       from './components/location'
 const store = createStore(reducer)
 const history = syncHistoryWithStore(hashHistory, store)
 
-
-
-
 class App extends Component{
+ // componentDidMount(){
+ //   request.get('/getfeed')
+ //          .end((feeds)=>{
+ //            store.dispatch({type:'LOAD_FEEDS',feeds})
+ //          })
+ // }
  render(){
    return (
      <Provider store={store}>
