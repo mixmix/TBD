@@ -15,6 +15,7 @@ router.get('/getUserPhotos', function(req,res,next){
   } else {
     var user = { id: req.session.userId }
     db.getUserPhotos(user).then(function(result){
+      console.log('user created:', result)
       res.send(result)
     })
   }
@@ -29,7 +30,12 @@ router.post('/new', function(req,res,next){
   bcrypt.hash(user.password, saltRounds, function(err, passwordHash){
     var newUser = { fullName: user.fullName, email: user.email, passwordHash: passwordHash, styleRating: 0, connoisseurRating: 0 }
     db.createUser(newUser).then(function(result){
-      res.send(result[0])
+      req.session.userId = result[0]
+      res.send(newUser)
+      // db.getUser({id: result[0]}).then(function(userResult){
+      //   console.log('user', userResult)
+      //   res.send(userResult)
+      // })
     })
   })
 

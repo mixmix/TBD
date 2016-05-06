@@ -3,7 +3,7 @@ import request           from 'superagent'
 import { connect }       from 'react-redux'
 
 class Signup extends Component{
- handleSignup(){
+ handleSignup(e){
    e.preventDefault()
    let email = this.refs.email.value
    let Fullname= this.refs.name.value
