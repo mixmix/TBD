@@ -2,14 +2,14 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTableIfNotExists('users', function(table) {
     table.increments();
-    table.string('firstName');
-    table.string('lastName');
+    table.string('fullName');
     table.string('email');
-    table.string('password_hash');
+    table.string('profilePicture');
+    table.string('passwordHash');
     table.integer('styleRating');
     table.integer('connoisseurRating');
-    table.biginteger('fb_id');
-    table.biginteger('ig_id');
+    table.biginteger('fbId');
+    table.biginteger('igId');
   })
 };
 
