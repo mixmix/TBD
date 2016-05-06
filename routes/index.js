@@ -7,21 +7,19 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+//doesn't work yet, waiting on functionality to be decided
 router.get('/getFeed', function(req, res, next) {
-  db.getImagesByDate().then(function(result) {
-    res.send(result)
-  })
+  if (req.session.userId){
+    db.getPhotosByDate().then(function(result) {
+      res.send(result)
+    })
+  } else {
+    db.getPhotosByDate().then(function(result) {
+      res.send(result)
+    })
+  }
 })
 
-router.get('/getUsers', function(req, res, next) {
-  db.getUsers().then(function (result) {
-    res.send(result)
-  })
-})
-
-router.get('/sessionID', function(req,res,next){
-  res.send(req.sessionID)
-})
 
 
 module.exports = router;

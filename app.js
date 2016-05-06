@@ -1,29 +1,29 @@
 require('dotenv').config();
-
-var express = require('express');
 var path = require('path');
+
+//express
+var express = require('express');
 //var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session')
 
-
-var db = require('./database/db');
-
 //knex
 var Knex = require('knex');
-var knexConfig = require(__dirname + '/knexfile')
-var knex = Knex(knexConfig[process.env.NODE_ENV || 'development'])
+var knexConfig = require(__dirname + '/knexfile');
+var knex = Knex(knexConfig[process.env.NODE_ENV || 'development']);
 
 //passport
-var passport = require('passport')
-var FacebookStrategy = require('passport-facebook')
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook');
+var InstagramStrategy = require('passport-instagram');
 
-
+//routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
+var test = require('./routes/test');
 var app = express();
 
 // view engine setup
@@ -38,6 +38,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//session initialisation
 app.use(session({
   secret: 'This is a secret!',
   saveUninitialized: true,
@@ -46,9 +47,11 @@ app.use(session({
   cookie: {maxAge: 24*60*60*1000}
 }))
 
-console.log(process.env.DOMAIN)
+//Passport initialisation
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Facebook strategy
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
@@ -57,10 +60,29 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     var user = profile
+    console.log(user)
     var checkUser = {}
-    checkUser.firstName = user.displayName
+    checkUser.fullName = user.displayName
     checkUser.email = user.emails[0].value
-    checkUser.fb_id = user.id
+    checkUser.fbId = user.id
+    db.findOrCreate(checkUser, function(returnedUser){
+      user.dbid = returnedUser.id
+      return cb(null, user)
+    })
+  }
+));
+
+// Instagram strategy
+passport.use(new InstagramStrategy({
+    clientID: process.env.INSTAGRAM_CLIENT_ID,
+    clientSecret: process.env.INSTAGRAM_CLIENT_SECRET,
+    callbackURL: process.env.DOMAIN + "/auth/instagram/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    var user = profile
+    var checkUser = {}
+    checkUser.fullName = user.displayName
+    checkUser.igId = user.id
     db.findOrCreate(checkUser, function(returnedUser){
       user.dbid = returnedUser.id
       return cb(null, user)
@@ -69,22 +91,18 @@ passport.use(new FacebookStrategy({
 ));
 
 passport.serializeUser(function(user, cb) {
-  //this gets called around verification
-  // console.log("<<  ".green + "I just serialized a user".red, new Date().toJSON() )
-  // console.log("<<  ", user)
   cb(null, user);
 });
 
 passport.deserializeUser(function(obj, cb) {
-  // this gets called with req.user
-  // console.log(">>  ".green + "I just deserialize a user".red)
-  // console.log(">>  ", obj)
   cb(null, obj);
 });
 
+//routing
 app.use('/', routes);
 app.use('/users', users);
 app.use('/auth', auth)
+app.use('/test', test)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
