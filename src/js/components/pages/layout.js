@@ -7,7 +7,9 @@ export default class Layout extends Component{
    return (
      <div>
        <Nav location={location}/>
-       {this.props.children}
+       <div class="page">
+         {this.props.children}
+       </div>
      </div>
    )
  }

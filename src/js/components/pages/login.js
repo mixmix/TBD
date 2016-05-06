@@ -24,9 +24,15 @@ export default class Login extends Component{
      form= <Signup history={this.props.history}/>
    }
    return (
-     <div>
+     <div class="login">
+       <div class="logo">
+         <img src="images/corgi.svg"/>
+         <h1>on-fleek</h1>
+       </div>
         {form}
-        {button}
+        <div class="sign-ins">
+          {button}
+        </div>
      </div>
    )
  }

@@ -1,4 +1,5 @@
-
+//import the stylesheets
+import '../style/index.scss'
 //import the libs
 import React,{Component}       from 'react'
 import {render}                from 'react-dom'
