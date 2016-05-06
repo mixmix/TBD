@@ -4,11 +4,12 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('fullName');
     table.string('email');
-    table.string('password_hash');
+    table.string('profilePicture');
+    table.string('passwordHash');
     table.integer('styleRating');
     table.integer('connoisseurRating');
-    table.biginteger('fb_id');
-    table.biginteger('ig_id');
+    table.biginteger('fbId');
+    table.biginteger('igId');
   })
 };
 
