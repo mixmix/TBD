@@ -20,7 +20,9 @@ class FeedContainer extends Component{
    : content=<h1>Loading</h1> ;
    return (
      <div>
-        <button onClick={this.changeDisplay.bind(this)}>grid</button>
+        <div class="settings-bar">
+          <div class="settings-btn" onClick={this.changeDisplay.bind(this)}>grid</div>
+        </div>
         <div class={this.state.grid? 'feed-container grid' : 'feed-container'}>
           {content}
         </div>
