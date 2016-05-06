@@ -32,10 +32,6 @@ router.post('/new', function(req,res,next){
     db.createUser(newUser).then(function(result){
       req.session.userId = result[0]
       res.send(newUser)
-      // db.getUser({id: result[0]}).then(function(userResult){
-      //   console.log('user', userResult)
-      //   res.send(userResult)
-      // })
     })
   })
 
