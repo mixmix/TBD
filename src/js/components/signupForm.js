@@ -6,11 +6,11 @@ class Signup extends Component{
  handleSignup(e){
    e.preventDefault()
    let email = this.refs.email.value
-   let Fullname= this.refs.name.value
+   let fullName= this.refs.name.value
    let password= this.refs.password.value
    let {successLogin,history} = this.props
    request.post('/users/new')
-          .send({email,password,Fullname})
+          .send({email,password,fullName})
           .end((err,user)=>{
             if(err){
               console.log('signup err')
