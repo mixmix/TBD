@@ -12,7 +12,7 @@ class Login extends Component{
           .send({email,password})
           .end((err,user)=>{
             if(err){
-              loginFail()
+              console.log('login err')
             }else{
               successLogin(user)
             }
@@ -41,9 +41,6 @@ const mapDispatchToProps= (dispatch) =>{
   return {
     successLogin :(user)=>{
       dispatch({type:'USER_LOGIN',user})
-    },
-    loginFail :()=>{
-      dispatch({type:'USER_LOGIN_FAIL'})
     }
   }
 }
