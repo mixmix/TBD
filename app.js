@@ -64,7 +64,7 @@ passport.use(new FacebookStrategy({
     var checkUser = {}
     checkUser.fullName = user.displayName
     checkUser.email = user.emails[0].value
-    checkUser.fb_id = user.id
+    checkUser.fbId = user.id
     db.findOrCreate(checkUser, function(returnedUser){
       user.dbid = returnedUser.id
       return cb(null, user)
@@ -83,7 +83,7 @@ passport.use(new InstagramStrategy({
     var user = profile
     var checkUser = {}
     checkUser.fullName = user.displayName
-    checkUser.ig_id = user.id
+    checkUser.igId = user.id
     db.findOrCreate(checkUser, function(returnedUser){
       user.dbid = returnedUser.id
       return cb(null, user)
