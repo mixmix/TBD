@@ -7,6 +7,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+//doesn't work yet, waiting on functionality to be decided
 router.get('/getFeed', function(req, res, next) {
   if (req.session.userId){
     db.getPhotosByDate().then(function(result) {

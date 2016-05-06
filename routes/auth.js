@@ -3,7 +3,7 @@ var router = express.Router();
 var path = require('path')
 var passport = require('passport')
 
-/* GET users listing. */
+//facebook authentication
 router.get('/facebook',
   passport.authenticate('facebook', { scope: ['email'] }));
 
@@ -14,6 +14,8 @@ router.get('/facebook/callback',
     res.redirect('/')
   });
 
+
+//instagram authentication
 router.get('/instagram',
   passport.authenticate('instagram'));
 

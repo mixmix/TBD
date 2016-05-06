@@ -4,7 +4,15 @@ import { connect } from 'react-redux'
 import Feed  from '.././feed'
 
 class FeedContainer extends Component{
-
+ constructor(){
+   super()
+   this.state={
+     grid:false
+   }
+ }
+ changeDisplay(){
+   this.setState({grid:!this.state.grid})
+ }
  render(){
    const { feeds } = this.props
    let content
@@ -12,7 +20,12 @@ class FeedContainer extends Component{
    : content=<h1>Loading</h1> ;
    return (
      <div>
-      {content}
+        <div class="settings-bar">
+          <div class="settings-btn" onClick={this.changeDisplay.bind(this)}>grid</div>
+        </div>
+        <div class={this.state.grid? 'feed-container grid' : 'feed-container'}>
+          {content}
+        </div>
      </div>
    )
  }
