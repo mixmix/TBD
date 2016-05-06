@@ -1,0 +1,54 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .logo {
+    width: 80vw;
+    // height: 30vh;
+    align-self: center;
+
+    h1 {
+      font-family: $sans;
+      font-size: 2.5em;
+      color: $dark;
+      font-style: italic;
+      font-weight: 700;
+      background-color: $red;
+      display: inline-block;
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  label, button, input {
+    font-family: $sans;
+    font-size: 1.5em;
+  }
+
+  form {
+    margin: 10vh;
+    display: flex;
+    flex-direction: column;
+
+    button {
+      background: $blue;
+      border: none;
+      border-radius: 5px;
+      color: $light;
+      margin-top: 2vh;
+      padding: 10px 15px;
+    }
+  }
+
+  .sign-ins {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 10vh;
+  }
+
+
+}

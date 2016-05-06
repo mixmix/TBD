@@ -1,0 +1,22 @@
+nav {
+  background-color: $blue;
+  min-height: 10vh;
+  color: $light;
+  display: flex;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+
+  a {
+    text-decoration: none;
+    font-family: $serif;
+    color: $light;
+    font-size: 1.35em;
+    flex-grow: 1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+}

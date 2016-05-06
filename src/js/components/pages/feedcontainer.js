@@ -11,7 +11,7 @@ class FeedContainer extends Component{
    feeds.length>0 ? content=feeds.map(feed => <Feed key={feed.id} {...feed}/>)
    : content=<h1>Loading</h1> ;
    return (
-     <div>
+     <div class="feed-container">
       {content}
      </div>
    )
