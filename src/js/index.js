@@ -17,12 +17,14 @@ import Imagepage      from './components/pages/imagepage'
 import Profile        from './components/pages/profile'
 import Location       from './components/pages/location'
 import Login          from './components/pages/login'
+import Upload         from './components/pages/upload'
 
 const store = createStore(reducer)
 const history = syncHistoryWithStore(hashHistory, store)
 
 class App extends Component{
  componentDidMount(){
+   $.cloudinary.config({ cloud_name: 'vicken', api_key: '226983578886724'})
    request.get('/getFeed')
           .end((err,feeds)=>{
             feeds=JSON.parse(feeds.text)
@@ -39,6 +41,7 @@ class App extends Component{
            <Route path="profile" component={Profile}></Route>
            <Route path='location' component={Location}></Route>
            <Route path='login' component={Login}></Route>
+           <Route path='upload' component={Upload}></Route>
          </Route>
        </Router>
      </Provider>
@@ -47,3 +50,5 @@ class App extends Component{
 }
 
 render(<App />, document.getElementById('app'))
+
+$.cloudinary.config({ cloud_name: 'vicken', api_key: '226983578886724'})
