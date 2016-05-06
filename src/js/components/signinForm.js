@@ -29,7 +29,7 @@ class Signin extends Component{
           <input type="password" name="password" ref='password' required/>
           <button onClick={this.handleLogin.bind(this)} type='submit'>Log In</button>
         </form>
-        <div>
+        <div class="sign-ins">
           <a href='auth/facebook'>facebook</a>
           <a href='auth/instagram'>instagram</a>
         </div>

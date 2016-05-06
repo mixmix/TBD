@@ -3,6 +3,15 @@
   flex-direction: column;
   width: 100%;
 
+  button {
+    background: $blue;
+    border: none;
+    border-radius: 5px;
+    color: $light;
+    margin-top: 2vh;
+    padding: 10px 15px;
+  }
+
   .logo {
     width: 80vw;
     // height: 30vh;
@@ -35,18 +44,9 @@
   }
 
   form {
-    margin: 10vh;
+    margin: 5vh 10vh;
     display: flex;
     flex-direction: column;
-
-    button {
-      background: $blue;
-      border: none;
-      border-radius: 5px;
-      color: $light;
-      margin-top: 2vh;
-      padding: 10px 15px;
-    }
   }
 
   .sign-ins {
@@ -55,6 +55,5 @@
     align-items: center;
     margin: 0 10vh;
   }
-
 
 }
