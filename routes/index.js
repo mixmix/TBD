@@ -20,6 +20,14 @@ router.get('/getFeed', function(req, res, next) {
   }
 })
 
+router.get('/locations', function(req,res,next){
+  res.send({ cities: ["Auckland", "Wellington"], countries:["New Zealand", "United States of America"]})
+})
+
+router.post('/locations/getFeed', function(req,res,next){
+  res.send("hello")
+})
+
 
 
 module.exports = router;
