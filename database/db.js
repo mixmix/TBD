@@ -54,5 +54,8 @@ module.exports = {
   },
   getCities: function(){
     return knex('cities')
+  },
+  getFeedByLocation: function(location){
+    return knex('photos').where(location)
   }
 }

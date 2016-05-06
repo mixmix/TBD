@@ -32,7 +32,20 @@ router.get('/locations', function(req,res,next){
 })
 
 router.post('/locations/getFeed', function(req,res,next){
-  res.send("hello")
+  console.log('request', req.body.country)
+  if (req.body.city){
+    db.getFeedByLocation({ city: req.body.city })
+      .then(function(feed){
+        res.send(feed)
+      })
+  } else if (req.body.country){
+    db.getFeedByLocation({ country: req.body.country })
+      .then(function(feed){
+        res.send(feed)
+      })
+  } else {
+    res.send({})
+  }
 })
 
 
