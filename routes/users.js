@@ -24,7 +24,7 @@ router.post('/login', function(req,res,next){
   var checkUser = { email: req.body.email}
   db.getUser(checkUser).then(function(returnedUsers){
     var returnedUser = returnedUsers[0]
-    var validPassword = bcrypt.compareSync(req.body.password, returnedUser.password_hash);
+    var validPassword = bcrypt.compareSync(req.body.password, returnedUser.passwordHash);
     if (validPassword){
       req.session.userId = returnedUser.id
       res.send({ name: returnedUser.fullName })
