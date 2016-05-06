@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
+var db = require('../database/db');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -10,11 +11,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/getUserPhotos', function(req,res,next){
   if (!req.session.userId) {
-    res.send({})
+    res.send([])
   } else {
-    console.log("HERE")
-    var user = { userId: req.session.userId }
-    console.log('user', user)
+    var user = { id: req.session.userId }
     db.getUserPhotos(user).then(function(result){
       res.send(result)
     })
@@ -22,8 +21,15 @@ router.get('/getUserPhotos', function(req,res,next){
 })
 
 router.post('/login', function(req,res,next){
-  console.log(req.body)
-
+  var checkUser = { email: req.body.email}
+  db.getUser(checkUser).then(function(returnedUsers){
+    var returnedUser = returnedUsers[0]
+    var validPassword = bcrypt.compareSync(req.body.password, returnedUser.password_hash);
+    if (validPassword){
+      req.session.userId = returnedUser.id
+      res.send({ name: returnedUser.fullName })
+    }
+  })
 })
 
 

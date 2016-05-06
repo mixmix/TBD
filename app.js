@@ -13,12 +13,13 @@ var db = require('./database/db');
 
 //knex
 var Knex = require('knex');
-var knexConfig = require(__dirname + '/knexfile')
-var knex = Knex(knexConfig[process.env.NODE_ENV || 'development'])
+var knexConfig = require(__dirname + '/knexfile');
+var knex = Knex(knexConfig[process.env.NODE_ENV || 'development']);
 
 //passport
-var passport = require('passport')
-var FacebookStrategy = require('passport-facebook')
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook');
+var InstagramStrategy = require('passport-instagram');
 
 
 var routes = require('./routes/index');
@@ -50,6 +51,8 @@ app.use(session({
 console.log(process.env.DOMAIN)
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Facebook strategy
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
@@ -58,8 +61,9 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     var user = profile
+    console.log(user)
     var checkUser = {}
-    checkUser.firstName = user.displayName
+    checkUser.fullName = user.displayName
     checkUser.email = user.emails[0].value
     checkUser.fb_id = user.id
     db.findOrCreate(checkUser, function(returnedUser){
@@ -68,6 +72,26 @@ passport.use(new FacebookStrategy({
     })
   }
 ));
+
+// Instagram strategy
+passport.use(new InstagramStrategy({
+    clientID: process.env.INSTAGRAM_CLIENT_ID,
+    clientSecret: process.env.INSTAGRAM_CLIENT_SECRET,
+    callbackURL: process.env.DOMAIN + "/auth/instagram/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    console.log(profile)
+    var user = profile
+    var checkUser = {}
+    checkUser.fullName = user.displayName
+    checkUser.ig_id = user.id
+    db.findOrCreate(checkUser, function(returnedUser){
+      user.dbid = returnedUser.id
+      return cb(null, user)
+    })
+  }
+));
+
 
 passport.serializeUser(function(user, cb) {
   //this gets called around verification

@@ -8,15 +8,15 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/getFeed', function(req, res, next) {
-
   if (req.session.userId){
-    console.log('need to send signed in feed')
+    db.getPhotosByDate().then(function(result) {
+      res.send(result)
+    })
   } else {
-    console.log('not signed in')
+    db.getPhotosByDate().then(function(result) {
+      res.send(result)
+    })
   }
-  db.getPhotosByDate().then(function(result) {
-    res.send(result)
-  })
 })
 
 
