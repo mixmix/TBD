@@ -4,11 +4,12 @@ var bcrypt = require('bcrypt');
 const saltRounds = 10;
 var db = require('../database/db');
 
-/* GET users listing. */
+//doesn't do anything
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
-});
+})
 
+//returns photos for a specific user based on the id, if the user hasn't logged in send an empty array
 router.get('/getUserPhotos', function(req,res,next){
   if (!req.session.userId) {
     res.send([])
@@ -21,26 +22,19 @@ router.get('/getUserPhotos', function(req,res,next){
   }
 })
 
+//creates a new user based on a post request
 router.post('/new', function(req,res,next){
-  //create the user on the database
-  //email and password
-  console.log('new user')
-
   var user = req.body
   bcrypt.hash(user.password, saltRounds, function(err, passwordHash){
     var newUser = { fullName: user.fullName, email: user.email, passwordHash: passwordHash, styleRating: 0, connoisseurRating: 0 }
     db.createUser(newUser).then(function(result){
-      req.session.userId = result[0]
+      req.session.userId = result[0] //saves the user id returned from the new user created to the session
       res.send(newUser)
     })
   })
-
-
-
-  //username
-  //photo
 })
 
+//user signs in
 router.post('/login', function(req,res,next){
   var checkUser = { email: req.body.email}
   db.getUser(checkUser).then(function(returnedUsers){
@@ -48,7 +42,7 @@ router.post('/login', function(req,res,next){
     var validPassword = bcrypt.compareSync(req.body.password, returnedUser.passwordHash);
     if (validPassword){
       req.session.userId = returnedUser.id
-      res.send({ name: returnedUser.fullName })
+      res.send({ name: returnedUser.fullName }) //sends the username once signed in
     }
   })
 })

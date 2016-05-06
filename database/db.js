@@ -13,9 +13,6 @@ module.exports = {
   getPhotosByDate: function() {
     return knex.select().table('photos').orderBy('created_at','desc')
   },
-  close: function() {
-    return knex.destroy();
-  },
   findOrCreate: function(user, cb){
       knex('users').where(user)
         .then(function(result){
