@@ -45,6 +45,14 @@ module.exports = {
   },
   insertUsers: function(users){
     return knex('users').insert(users)
-
+  },
+  insertPhoto: function(photoData){
+    return knex('photos').insert(photoData)
+  },
+  getCountries: function(){
+    return knex('countries')
+  },
+  getCities: function(){
+    return knex('cities')
   }
 }
