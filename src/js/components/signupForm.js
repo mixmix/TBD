@@ -15,6 +15,7 @@ class Signup extends Component{
             if(err){
               console.log('signup err')
             }else{
+              user=JSON.parse(user.text)
               successLogin(user) // set user to state
               history.push('/') // lead user to home page
             }

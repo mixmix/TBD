@@ -14,6 +14,7 @@ class Signin extends Component{
             if(err){
               console.log('login err')
             }else{
+              user=JSON.parse(user.text)
               successLogin(user)
               history.push('/')
             }
