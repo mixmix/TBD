@@ -39,5 +39,19 @@ module.exports = {
   },
   getUser: function(user){
     return knex('users').where(user)
+  },
+  createUser: function(user){
+    return knex('users').insert(user)
+      .then(function(result){
+        knex('users').where(user) })
+      .then(function(resultUser) {
+        return resultUser })
+  },
+  clearUsers: function(){
+    return knex('users').del()
+  },
+  insertUsers: function(users){
+    return knex('users').insert(users)
+
   }
 }

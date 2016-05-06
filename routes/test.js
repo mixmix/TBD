@@ -18,15 +18,6 @@ router.get('/getVotes', function(req,res,next){
   })
 })
 
-router.get('/getUserPhotos', function(req,res,next){
-  if (!req.session.userId) { res.send({}) }
-  else {
-    var user = { userId: req.session.userId }
-    db.getUserPhotos(user).then(function(result){
-      res.send(result)
-    })
-  }
-})
 
 
 router.get('/test', function(req,res,next){

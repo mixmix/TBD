@@ -20,6 +20,25 @@ router.get('/getUserPhotos', function(req,res,next){
   }
 })
 
+router.post('/new', function(req,res,next){
+  //create the user on the database
+  //email and password
+  console.log('new user')
+
+  var user = req.body
+  bcrypt.hash(user.password, saltRounds, function(err, passwordHash){
+    var newUser = { fullName: user.fullName, email: user.email, passwordHash: passwordHash, styleRating: 0, connoisseurRating: 0 }
+    db.createUser(newUser).then(function(result){
+      res.send(result[0])
+    })
+  })
+
+
+
+  //username
+  //photo
+})
+
 router.post('/login', function(req,res,next){
   var checkUser = { email: req.body.email}
   db.getUser(checkUser).then(function(returnedUsers){
