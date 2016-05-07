@@ -18,5 +18,6 @@ const _fleekPhoto = (id) =>{
 
 export {
   _passPhoto,
-  _fleekPhoto
+  _fleekPhoto,
+
 }
