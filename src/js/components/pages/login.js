@@ -6,17 +6,17 @@ export default class Login extends Component{
   constructor(){
     super()
     this.state={
-      status:true
+      toggleLogInorOut:true
     }
   }
 
   handleClick(){
-    this.setState({status: !this.state.status})
+    this.setState({toggleLogInorOut: !this.state.toggleLogInorOut})
   }
 
  render(){
    let button, form;
-   if(this.state.status){
+   if(this.state.toggleLogInorOut){
      button= <button onClick={this.handleClick.bind(this)}>Sign Up</button>
      form= <Signin history={this.props.history}/>
    }else{
