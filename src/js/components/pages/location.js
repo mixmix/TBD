@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 // components
 import Feed  from '../feed'
 import Searching from './searching'
+import _ from 'lodash'
 
 class Location extends Component{
  constructor(props){
@@ -10,7 +11,9 @@ class Location extends Component{
    this.state={
      grid: false,
      feeds: this.props.feeds,
-     filtered: []
+     filtered: [],
+     searchString: "Loading",
+     possibleLocations: []
    }
  }
 
@@ -29,9 +32,16 @@ class Location extends Component{
     cities: ["Toronto", "Wellington", "Auckland", "Tokyo"],
     countries: ["NZ", "AUS", "USA"]
   }
+  console.log('state gets set here')
+  this.setState({
+    ...this.state,
+    possibleLocations: fakeLocations.cities.concat(fakeLocations.countries)
+  })
   this.props.dispatch({
     type: 'FILTER_FEED_LOCATION',
-    possibleLocations: fakeLocations })
+    possibleLocations: fakeLocations
+  })
+
  }
 
   filterLocation(e) {
@@ -42,7 +52,8 @@ class Location extends Component{
     // console.log('state in filter',this.state)
     this.setState({
       ...this.state,
-      filtered: matchingLocations
+      filtered: matchingLocations,
+      searchString: searchTerm
     })
   }
 
@@ -54,15 +65,14 @@ class Location extends Component{
   }
 
   render(){
-    // console.log('props', this.props.feeds)
-    console.log('before-render',this.state)
+    // console.log('state', this.state)
     let content
     this.state.filtered.length > 0 ? content = this.state.filtered.map(cell => <Feed key={cell.id} {...cell}/>)
-    : content = <h1>Loading</h1>;
+    : content = <Searching searchString={this.state.searchString} possibleLocations={this.state.possibleLocations} />;
     return (
       <div>
         <div class="settings-bar">
-          <input onChange={this.filterLocation.bind(this)} type="search" placeholder="location" />
+          <input onChange={this.filterLocation.bind(this)} type="search" placeholder="location" ref="searchbar" />
           <div class="settings-btn" onClick={this.changeDisplay.bind(this)}>grid</div>
         </div>
         <div class={this.state.grid? 'feed-container grid' : 'feed-container'}>
