@@ -28,7 +28,7 @@ module.exports = {
           }
         })
   },
-  getVotes: function() {
+  getVotes: function() { //gets all votes
     return knex('votes')
   },
   getUserPhotos: function(user){

@@ -18,10 +18,10 @@ router.get('/getFeed', function(req, res, next) {
               if (photo.userId === req.session.userId) {
                 return false
               }
-              var notVotedOn = false
+              var notVotedOn = true
               votes.map(function(vote){
-                if (photo.id !== vote.photoId) {
-                  notVotedOn = true
+                if (photo.id === vote.photoId) {
+                  notVotedOn = false
                 }
               })
               return notVotedOn

@@ -3,14 +3,15 @@ import { combineReducers } from 'redux'
 import { routerReducer }   from 'react-router-redux'
 import request             from 'superagent'
 
-import feeds from './feeds'
-import user from './user'
-import filter from './filter'
-
+import feeds      from './feeds'
+import user       from './user'
+import categories from './categories'
+import filter     from './filter'
 
 export default combineReducers({
   feeds,
   user,
+  categories,
   routing: routerReducer,
   filter
 })
@@ -28,12 +29,6 @@ const postNewFeed = (photo) => {
          .end()
 }
 
-const getCategories = (cb) => {
-  request.get('/')
-         .end((err,data) => {
-           cb(data)
-         })
-}
 
 export {
   postVotes,
