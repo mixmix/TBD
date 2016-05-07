@@ -7,12 +7,28 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-//doesn't work yet, waiting on functionality to be decided
+//if a user isn't logged in will return all photos, otherwise will return photos not voted on and not belonging to the user
 router.get('/getFeed', function(req, res, next) {
   if (req.session.userId){
-    db.getPhotosByDate().then(function(result) {
-      res.send(result)
-    })
+    db.getVotesByUserId({ id: req.session.userId })
+      .then(function(votes){
+        db.getPhotos()
+          .then(function(photos){
+            photos = photos.filter(function(photo){
+              if (photo.userId === req.session.userId) {
+                return false
+              }
+              var notVotedOn = false
+              votes.map(function(vote){
+                if (photo.id !== vote.photoId) {
+                  notVotedOn = true
+                }
+              })
+              return notVotedOn
+            })
+            res.send(photos)
+          })
+      })
   } else {
     db.getPhotosByDate().then(function(result) {
       res.send(result)
@@ -44,6 +60,7 @@ router.get('/allLocations', function(req,res,next){
 
 })
 
+//gets location by feed
 router.post('/locations/getFeed', function(req,res,next){
   if (req.body.city){
     db.getFeedByLocation({ city: req.body.city })
@@ -60,6 +77,7 @@ router.post('/locations/getFeed', function(req,res,next){
   }
 })
 
+//gets catergories
 router.get('/getCategories', function(req, res, next) {
   db.getCategories().then(function(result) {
     res.send(result)

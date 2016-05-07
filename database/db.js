@@ -4,16 +4,16 @@ var knexConfig = require(__dirname + '/../knexfile');
 var knex = Knex(knexConfig[process.env.NODE_ENV || 'development'])
 
 module.exports = {
-  getUsers: function() {
+  getUsers: function() { //not needed for production
     return knex.select().table('users')
   },
-  getPhotos: function() {
+  getPhotos: function() { //gets all photos
     return knex.select().table('photos')
   },
-  getPhotosByDate: function() {
-    return knex.select().table('photos').orderBy('created_at','desc')
+  getPhotosByDate: function() { //gets all photos by date
+    return knex.select().table('photos').limit(50).orderBy('created_at','desc')
   },
-  findOrCreate: function(user, cb){
+  findOrCreate: function(user, cb){ //finds or create photos
       knex('users').where(user)
         .then(function(result){
           if (result.length > 0) {
@@ -62,7 +62,18 @@ module.exports = {
     return knex('photos').where(location)
   },
   postVote: function(vote){
+    if (vote.vote > 0) {
+      vote.vote = 1
+    } else {
+      vote.vote = 0
+    }
     return knex('votes').insert(vote)
+      .then(function(result){
+        knex('photos').where('id', '=', vote.photoId).increment('rating', vote.vote)
+          .then(function(voteResult){
+            return knex('photos').where('photoId', '=', vote.photoId)
+          })
+      })
   },
   getCountriesByCount: function(){
     return knex('countries').where('count', '>', 0)
@@ -71,9 +82,9 @@ module.exports = {
     return knex('cities').where('count', '>', 0)
   },
   getPhotosByDateNotVotedOn: function(){
-
-    return knex('photos').crossJoin(
-      'votes', 'photos.id', 'votes.photoId'
-    )
+    return knex('photos').crossJoin('votes', 'photos.id', 'votes.photoId')
+  },
+  getVotesByUserId: function(user){
+    return knex('votes').where(user)
   }
 }

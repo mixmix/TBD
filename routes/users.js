@@ -51,7 +51,7 @@ router.post('/login', function(req,res,next){
 router.post('/newImage', function(req, res, next) {
   var photoData = {
     link: req.body.link,
-    categoryId: req.body.categoryId,
+    category: req.body.categoryId,
     country: req.body.country,
     city: req.body.city,
     userId: req.session.userId,
@@ -59,17 +59,22 @@ router.post('/newImage', function(req, res, next) {
     rating: 0
   }
   db.insertPhoto(photoData).then(function(response) {
-    res.end();
+    res.send('Hello there')
   })
 })
 
 //user posts votes
 router.post('/vote', function(req,res,next){
-  var vote = { vote: req.body.vote, photoId: req.session.photoId, userId: req.session.userId}
-  db.postVote(vote)
-    .then(function(result){
-      res.send(result)
-    })
+  if (req.session.userId){
+    var vote = { vote: req.body.vote, photoId: req.body.photoId, userId: req.session.userId}
+    db.postVote(vote)
+      .then(function(result){
+        res.send(result)
+      })
+  } else {
+    res.send({})
+  }
+
 })
 
 module.exports = router;
