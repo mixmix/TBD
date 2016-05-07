@@ -32,6 +32,10 @@ class Upload extends Component{
       height: '20px',
       width: '0px'
     };
+    let options = this.props.categories.length>0 ?
+    this.props.categories.map((category)=>{
+      return <option value={category.id}>{category.category}</option>
+    }) : '';
    return (
      <div>
        <form id='upload'>
@@ -39,11 +43,8 @@ class Upload extends Component{
        <img src='' id='preview'/>
        <div class='progress_bar' style={divStyle}></div>
        <label>Category</label>
-         <select>
-            <option value="ctg_1">Casual</option>
-            <option value="ctg_2">Urban</option>
-            <option value="ctg_3">Classic</option>
-            <option value="ctg_4">Bussiness</option>
+         <select ref='category'>
+            {options}
          </select>
          <label>location</label>
          <input type='text' required id='location'/>
@@ -53,4 +54,8 @@ class Upload extends Component{
  }
 }
 
-export default connect()(Upload)
+export default connect((state)=>{
+  return {
+    categories : state.categories
+  }
+})(Upload)
