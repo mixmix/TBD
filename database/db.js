@@ -45,6 +45,8 @@ module.exports = {
   },
   insertUsers: function(users){
     return knex('users').insert(users)
-
+  },
+  insertPhoto: function(photoData){
+    return knex('photos').insert(photoData)
   }
 }
