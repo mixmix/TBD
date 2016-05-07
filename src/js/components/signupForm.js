@@ -6,8 +6,8 @@ class Signup extends Component{
  handleSignup(e){
    e.preventDefault()
    let email = this.refs.email.value
-   let fullName= this.refs.name.value
-   let password= this.refs.password.value
+   let fullName = this.refs.name.value
+   let password = this.refs.password.value
    let {successLogin,history} = this.props
    request.post('/users/new')
           .send({email,password,fullName})
@@ -25,7 +25,7 @@ class Signup extends Component{
    return(
      <form>
        <label>Full Name:</label>
-       <input type="text" name="Fullname" ref='name' required/><br/>
+       <input type="text" name="Fullname" ref='name' placeholder='Sam Smith' required/><br/>
        <label>Email:</label>
        <input type="email" name="emal" ref='email' required/><br/>
        <label>Password:</label>

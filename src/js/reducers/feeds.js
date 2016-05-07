@@ -10,6 +10,11 @@ export default function (state=fakeState.images, action){
     case 'PASS_PHOTO':
       return state
       break;
+    case 'ADD_NEW_FEED':
+      let nextState= state.concat([])
+      nextState.push(action.feed)
+      return nextState
+      break;
     default:
       return state
   }
