@@ -23,11 +23,11 @@ export default class Searching extends Component{
          <h1>{this.props.searchString}</h1>
          <ul className="possible-locations">
            {this.props.possibleLocations.filter((location) => {
-             let term = location.substring(0, this.props.searchString.length)
+             let term = location.name.substring(0, this.props.searchString.length)
              return (term === this.props.searchString)
            }).map((location, i) => {
 
-             return <li onClick={this.autofill.bind(this, {location})} key={i}>{location}</li>
+             return <li onClick={this.autofill.bind(this, {location})} key={i}>{location.name}</li>
            })}
          </ul>
        </div>

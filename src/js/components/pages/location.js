@@ -1,9 +1,12 @@
+//import utils
+import _ from 'lodash'
+import request from 'superagent'
+//import modules
 import React,{Component} from 'react'
 import { connect } from 'react-redux'
 // components
 import Feed  from '../feed'
 import Searching from './searching'
-import _ from 'lodash'
 
 class Location extends Component{
  constructor(props){
@@ -22,44 +25,42 @@ class Location extends Component{
  }
 
  getPossibleLocations() {
-   //send ajax to get possible locations
-  //  request.get('/locations')
-  //         .end(( err, res ) =>{
-  //           let possibleLocations = JSON.parse(res.text)
-  //           store.dispatch({type:'FILTER_FEED_LOCATION', possibleLocations})
-  //         })
-  let fakeLocations = {
-    cities: ["Toronto", "Wellington", "Auckland", "Tokyo"],
-    countries: ["NZ", "AUS", "USA"]
-  }
-  this.setState({
-    ...this.state,
-    possibleLocations: fakeLocations.cities.concat(fakeLocations.countries)
-  })
-  this.props.dispatch({
-    type: 'FILTER_FEED_LOCATION',
-    possibleLocations: fakeLocations
-  })
-
+   //send request to get possible locations
+   request.get('/locations')
+          .end(( err, res ) => {
+            let possibleLocations = JSON.parse(res.text)
+            possibleLocations = possibleLocations.countries
+            // console.log('i turn it into this', possibleLocations)
+            this.setState({
+              ...this.state,
+              possibleLocations: possibleLocations
+            })
+            // this.props.dispatch({
+            //   type: 'FILTER_FEED_LOCATION',
+            //   possibleLocations: possibleLocations
+            // })
+          })
  }
 
 
   filterLocation(e, valueFromChild) {
-    //?when api is up change country and city to countries and cities?
-    let searchTerm = valueFromChild || e.target.value
-    let matchingLocations = this.props.feeds.filter(possible => (possible.city === searchTerm || possible.country === searchTerm))
+    let searchTerm = valueFromChild ? valueFromChild.id : _.find(this.state.possibleLocations, [ 'id', e.target.value])
+
+    let searchString = valueFromChild ? valueFromChild.name : e.target.value
+
+    let matchingLocations = this.props.feeds.filter(possible => (possible.countryId === searchTerm))
 
     this.setState({
       ...this.state,
       filtered: matchingLocations,
-      searchString: searchTerm
+      searchString: searchString
     })
   }
 
   changeSearchValue(value) {
     this.setState({
       ...this.state,
-      searchString: value
+      searchString: value.name
     })
     this.filterLocation(null, value)
   }
@@ -75,7 +76,7 @@ class Location extends Component{
     // console.log('state', this.state)
     let content
     this.state.filtered.length > 0 ? content = this.state.filtered.map(cell => <Feed key={cell.id} {...cell}/>)
-    : content = <Searching changeSearchValue={this.changeSearchValue.bind(this)} searchString={this.state.searchString} possibleLocations={this.state.possibleLocations}  ref="searchbar" />;
+    : content = <Searching changeSearchValue={this.changeSearchValue.bind(this)} searchString={this.state.searchString} possibleLocations={this.state.possibleLocations} />;
     return (
       <div>
         <div class="settings-bar">
