@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('code');
     table.string('name');
+    table.integer('count').defaultTo(0)
   })
 };
 

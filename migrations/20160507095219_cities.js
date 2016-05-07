@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTableIfNotExists('cities', function(table) {
     table.increments();
     table.string('name');
+    table.integer('count').defaultTo(0)
   })
 };
 

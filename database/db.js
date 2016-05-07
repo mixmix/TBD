@@ -57,5 +57,8 @@ module.exports = {
   },
   getFeedByLocation: function(location){
     return knex('photos').where(location)
+  },
+  postVote: function(vote){
+    return knex('votes').insert(vote)
   }
 }
