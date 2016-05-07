@@ -29,8 +29,22 @@ const postNewFeed = (photo) => {
          .end()
 }
 
+const postSignin =(url,userInfo,history,cb) =>{
+  request.post(url)
+         .send(userInfo)
+         .end((err,user)=>{
+           if(err){
+             console.log('login err')
+           }else{
+             user=JSON.parse(user.text)
+             cb(user)
+             history.push('/')
+           }
+         })
+}
 
 export {
   postVotes,
-  postNewFeed
+  postNewFeed,
+  postSignin
 }
