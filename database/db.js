@@ -37,6 +37,9 @@ module.exports = {
   getUser: function(user){
     return knex('users').where(user)
   },
+  getCategories: function() {
+    return knex('categories')
+  },
   createUser: function(user){
     return knex('users').insert(user)
   },

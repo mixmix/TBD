@@ -59,6 +59,10 @@ router.post('/locations/getFeed', function(req,res,next){
   }
 })
 
-
+router.get('/getCategories', function(req, res, next) {
+  db.getCategories().then(function(result) {
+    res.send(result)
+  })
+})
 
 module.exports = router;
