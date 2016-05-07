@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import {connect}         from 'react-redux'
+import {postNewFeed}     from '../../reducers'
 
 class Upload extends Component{
  componentDidMount(){
@@ -9,12 +10,13 @@ class Upload extends Component{
       console.log('here is response',data.result.secure_url)
       var url = data.result.secure_url
       $('#preview').attr('src', url)
-      //post add to feeds, and post to server
       $('#submitUpload').attr('disabled',false).click((e)=>{
         e.preventDefault()
         if( $('#location').val() ){
           that.props.dispatch({type:'ADD_NEW_FEED',feed:{id:Date.now(),link:url}})
           that.props.history.push('/')
+          //post add to feeds, and post to server
+          //postNewFeed({link : url, categoryId: })
         }else{
           $('#location').focus();
         }

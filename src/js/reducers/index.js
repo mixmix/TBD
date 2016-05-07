@@ -19,6 +19,20 @@ const postVotes = (vote) => {
          .end()
 }
 
+const postNewFeed = (photo) => {
+  request.post('/users/newImage')
+         .send(photo)
+         .end()
+}
+
+const getCategories = (cb) => {
+  request.get('/')
+         .end((err,data) => {
+           cb(data)
+         })
+}
+
 export {
-  postVotes
+  postVotes,
+  postNewFeed
 }
