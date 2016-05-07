@@ -2,6 +2,22 @@ var db = require('../../database/db');
 
 var expect = require('chai').expect;
 
+//tests that need to be written
+//feed
+  //get feed
+    //gets all the photos the first 50
+  //locations
+  //all locations
+  //post locations /get feed
+  //get categories
+
+//user
+  //gets user photos
+  //post a new user
+  //sign in
+  //upload image
+  //post a vote
+
 
 describe('Database', function() {
   describe('Users', function(){

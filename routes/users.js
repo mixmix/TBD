@@ -65,7 +65,6 @@ router.post('/newImage', function(req, res, next) {
 
 //user posts votes
 router.post('/vote', function(req,res,next){
-  req.session.userId = 1
   if (req.session.userId){
     var vote = { vote: req.body.vote, photoId: req.body.photoId, userId: req.session.userId}
     db.postVote(vote)
