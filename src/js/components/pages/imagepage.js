@@ -15,8 +15,8 @@ export default class ImagePage extends Component{
     // post to server
     postVotes({photoid : id, vote : 1})
 
-    let currentIndex= _.findIndex(feeds,['id',id])
-    let nextFeed= feeds[currentIndex+1]
+    let currentIndex= _.findIndex(feeds,['id',Number(id)])
+    let nextFeed= feeds[currentIndex+1]? feeds[currentIndex+1] : feeds[0]
     // show next photo
     if(nextFeed){
       this.nextPhoto(history,nextFeed.id)
