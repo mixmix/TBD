@@ -12,7 +12,7 @@ class Location extends Component{
      grid: false,
      feeds: this.props.feeds,
      filtered: [],
-     searchString: "Loading",
+     searchString: "",
      possibleLocations: []
    }
  }
@@ -43,17 +43,25 @@ class Location extends Component{
 
  }
 
-  filterLocation(e) {
+
+  filterLocation(e, valueFromChild) {
     //?when api is up change country and city to countries and cities?
-    let searchTerm = e.target.value
+    let searchTerm = valueFromChild || e.target.value
     let matchingLocations = this.props.feeds.filter(possible => (possible.city === searchTerm || possible.country === searchTerm))
-    // console.log('filtered', matchingLocations)
-    // console.log('state in filter',this.state)
+
     this.setState({
       ...this.state,
       filtered: matchingLocations,
       searchString: searchTerm
     })
+  }
+
+  changeSearchValue(value) {
+    this.setState({
+      ...this.state,
+      searchString: value
+    })
+    this.filterLocation(null, value)
   }
 
   changeDisplay(){
@@ -67,11 +75,11 @@ class Location extends Component{
     // console.log('state', this.state)
     let content
     this.state.filtered.length > 0 ? content = this.state.filtered.map(cell => <Feed key={cell.id} {...cell}/>)
-    : content = <Searching searchString={this.state.searchString} possibleLocations={this.state.possibleLocations} />;
+    : content = <Searching changeSearchValue={this.changeSearchValue.bind(this)} searchString={this.state.searchString} possibleLocations={this.state.possibleLocations}  ref="searchbar" />;
     return (
       <div>
         <div class="settings-bar">
-          <input onChange={this.filterLocation.bind(this)} type="search" placeholder="location" ref="searchbar" />
+          <input value={this.state.searchString} onChange={this.filterLocation.bind(this)} type="search" placeholder="location" />
           <div class="settings-btn" onClick={this.changeDisplay.bind(this)}>grid</div>
         </div>
         <div class={this.state.grid? 'feed-container grid' : 'feed-container'}>
