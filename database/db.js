@@ -62,7 +62,17 @@ module.exports = {
     return knex('photos').where(location)
   },
   postVote: function(vote){
+    if (vote.vote > 0) {
+      vote.vote = 1
+    } else {
+      vote.vote = 0
+    }
     return knex('votes').insert(vote)
+      .then(function(result){
+        knex('photos').where('id', '=', vote.photoId).increment('rating', vote.vote).then(function(voteResult){
+          return knex('photos').where('photoId', '=', vote.photoId)
+        })
+      })
   },
   getCountriesByCount: function(){
     return knex('countries').where('count', '>', 0)
