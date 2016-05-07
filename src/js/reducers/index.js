@@ -6,12 +6,14 @@ import request             from 'superagent'
 import feeds      from './feeds'
 import user       from './user'
 import categories from './categories'
+import filter     from './filter'
 
 export default combineReducers({
   feeds,
   user,
   categories,
-  routing: routerReducer
+  routing: routerReducer,
+  filter
 })
 
 

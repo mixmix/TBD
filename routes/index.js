@@ -20,6 +20,49 @@ router.get('/getFeed', function(req, res, next) {
   }
 })
 
+//just gets locations that have got counts on them
+router.get('/locations', function(req,res,next){
+  db.getCountriesByCount()
+    .then(function(countries){
+      db.getCitiesByCount()
+        .then(function(cities){
+          res.send({ cities: cities, countries: countries})
+        })
+    })
 
+})
+
+router.get('/allLocations', function(req,res,next){
+  db.getCountries()
+    .then(function(countries){
+      db.getCities()
+        .then(function(cities){
+          res.send({ cities: cities, countries: countries})
+        })
+    })
+
+})
+
+router.post('/locations/getFeed', function(req,res,next){
+  if (req.body.city){
+    db.getFeedByLocation({ city: req.body.city })
+      .then(function(feed){
+        res.send(feed)
+      })
+  } else if (req.body.country){
+    db.getFeedByLocation({ country: req.body.country })
+      .then(function(feed){
+        res.send(feed)
+      })
+  } else {
+    res.send({})
+  }
+})
+
+router.get('/getCategories', function(req, res, next) {
+  db.getCategories().then(function(result) {
+    res.send(result)
+  })
+})
 
 module.exports = router;
