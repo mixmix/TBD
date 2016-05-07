@@ -51,5 +51,24 @@ module.exports = {
   },
   insertPhoto: function(photoData){
     return knex('photos').insert(photoData)
+  },
+  getCountries: function(){
+    return knex('countries')
+  },
+  getCities: function(){
+    return knex('cities')
+  },
+  getFeedByLocation: function(location){
+    return knex('photos').where(location)
+  },
+  postVote: function(vote){
+    return knex('votes').insert(vote)
+  },
+  getCountriesByCount: function(){
+    return knex('countries').where('count', '>', 0)
+  },
+  getCitiesByCount: function(){
+    return knex('cities').where('count', '>', 0)
+
   }
 }

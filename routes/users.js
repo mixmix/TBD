@@ -63,4 +63,13 @@ router.post('/newImage', function(req, res, next) {
   })
 })
 
+//user posts votes
+router.post('/vote', function(req,res,next){
+  var vote = { vote: req.body.vote, photoId: req.session.photoId, userId: req.session.userId}
+  db.postVote(vote)
+    .then(function(result){
+      res.send(result)
+    })
+})
+
 module.exports = router;

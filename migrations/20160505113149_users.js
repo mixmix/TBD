@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTableIfNotExists('users', function(table) {
     table.increments();
     table.string('fullName');
-    table.string('email');
+    table.string('email').unique();
     table.string('profilePicture');
     table.string('passwordHash');
     table.integer('styleRating');
