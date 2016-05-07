@@ -32,7 +32,6 @@ class Location extends Component{
     cities: ["Toronto", "Wellington", "Auckland", "Tokyo"],
     countries: ["NZ", "AUS", "USA"]
   }
-  console.log('state gets set here')
   this.setState({
     ...this.state,
     possibleLocations: fakeLocations.cities.concat(fakeLocations.countries)
