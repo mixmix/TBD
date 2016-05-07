@@ -11,7 +11,11 @@ export default class ImagePage extends Component{
     history.replace(url)
   }
   likePhoto(id){
-    let {fleekPhoto,history,feeds} = this.props
+    let {fleekPhoto,history,feeds,user} = this.props
+    if(user.name === 'visitor'){
+      history.push('login')
+      return ;
+    }
     // post to server
     postVotes({photoid : id, vote : 1})
 
@@ -25,7 +29,11 @@ export default class ImagePage extends Component{
     }
   }
   dislikePhoto(id){
-    let {passPhoto,history,feeds} = this.props
+    let {passPhoto,history,feeds,user} = this.props
+    if(user.name === 'visitor'){
+      history.push('login')
+      return ;
+    }
     // post to server
     postVotes({photoid : id, vote : 0})
 
@@ -65,7 +73,8 @@ export default class ImagePage extends Component{
 
 const mapStateToProps = (state) => {
   return {
-    feeds : state.feeds
+    feeds : state.feeds,
+    user : state.user
   }
 }
 
