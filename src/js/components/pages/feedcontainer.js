@@ -7,23 +7,22 @@ class FeedContainer extends Component{
  constructor(){
    super()
    this.state={
-     grid:false
+     toggleGridVisibility:false
    }
  }
  changeDisplay(){
-   this.setState({grid:!this.state.grid})
+   this.setState({toggleGridVisibility:!this.state.toggleGridVisibility})
  }
  render(){
    const { feeds } = this.props
-   let content
-   feeds.length>0 ? content=feeds.map(feed => <Feed key={feed.id} {...feed}/>)
-   : content=<h1>Loading</h1> ;
+   let content = feeds.length>0 ? feeds.map(feed => <Feed key={feed.id} {...feed}/>)
+   : <h1>Loading</h1> ;
    return (
      <div>
         <div class="settings-bar">
-          <div class="settings-btn" onClick={this.changeDisplay.bind(this)}>grid</div>
+          <div class="settings-btn" onClick={this.changeDisplay.bind(this)}>Grid</div>
         </div>
-        <div class={this.state.grid? 'feed-container grid' : 'feed-container'}>
+        <div class={this.state.toggleGridVisibility? 'feed-container grid' : 'feed-container'}>
           {content}
         </div>
      </div>
