@@ -3,6 +3,13 @@ import {connect}         from 'react-redux'
 import {postNewFeed}     from '../../reducers'
 
 class Upload extends Component{
+ constructor(){
+   super()
+   this.state={
+     id:0,
+     category: ''
+   }
+ }
  componentDidMount(){
     let that=this
      $('#upload').append($.cloudinary.unsigned_upload_tag("vfcanmwr",
@@ -15,8 +22,9 @@ class Upload extends Component{
         if( $('#location').val() ){
           that.props.dispatch({type:'ADD_NEW_FEED',feed:{id:Date.now(),link:url}})
           that.props.history.push('/')
+          let newFeed= {categoryId: that.state.id, link:url}
           //post add to feeds, and post to server
-          //postNewFeed({link : url, categoryId: })
+          postNewFeed(newFeed)
         }else{
           $('#location').focus();
         }
@@ -26,6 +34,13 @@ class Upload extends Component{
       $('.progress_bar').css('width',percent).html(percent);
     });
  }
+
+ handleChangeCtg(e){
+   this.setState({...this.state, id : e.target.value})
+ }
+ handleChangeLct(e){
+   this.setState({...this.state, category : e.target.value})
+ }
  render(){
     let divStyle = {
       backgroundColor: 'green',
@@ -33,8 +48,8 @@ class Upload extends Component{
       width: '0px'
     };
     let options = this.props.categories.length>0 ?
-    this.props.categories.map((category)=>{
-      return <option value={category.id}>{category.category}</option>
+    this.props.categories.map((category,i)=>{
+      return <option value={category.id} key={i}>{category.category}</option>
     }) : '';
    return (
      <div>
@@ -43,11 +58,11 @@ class Upload extends Component{
        <img src='' id='preview'/>
        <div class='progress_bar' style={divStyle}></div>
        <label>Category</label>
-         <select ref='category'>
+         <select onChange={this.handleChangeCtg.bind(this)}>
             {options}
          </select>
          <label>location</label>
-         <input type='text' required id='location'/>
+         <input type='text' required id='location' onChange={this.handleChangeLct.bind(this)}/>
          <button id='submitUpload' disabled>Submit</button>
      </div>
    )
