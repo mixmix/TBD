@@ -13,3 +13,5 @@ export default class Feed extends Component{
    )
  }
 }
+
+export {Feed}
