@@ -51,7 +51,7 @@ router.post('/login', function(req,res,next){
 router.post('/newImage', function(req, res, next) {
   var photoData = {
     link: req.body.link,
-    category: req.body.categoryId,
+    categoryId: req.body.categoryId,
     countryId: req.body.countryId,
     cityId: req.body.cityId,
     userId: req.session.userId,
