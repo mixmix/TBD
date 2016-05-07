@@ -25,15 +25,9 @@ export default class Searching extends Component{
            {this.props.possibleLocations.filter((location) => {
              let term = location.name.substring(0, this.props.searchString.length)
              return (term === this.props.searchString)
-           }).map((location, i) => {
-
-             return <li onClick={this.autofill.bind(this, {location})} key={i}>{location.name}</li>
-           })}
+           }).map((location, i) => <li onClick={this.autofill.bind(this, {location})} key={i}>{location.name}</li>)}
          </ul>
        </div>
      )
    }
 }
-
-
-//TODO extract out the filter to a function to unclutter lines 10 - 13, it looks a little scary
