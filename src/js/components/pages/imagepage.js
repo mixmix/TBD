@@ -18,15 +18,8 @@ export default class ImagePage extends Component{
     }
     // post to server
     postVotes({photoid : id, vote : 1})
-
-    let currentIndex= _.findIndex(feeds,['id',Number(id)])
-    let nextFeed= feeds[currentIndex+1]? feeds[currentIndex+1] : feeds[0]
-    // show next photo
-    if(nextFeed){
-      this.nextPhoto(history,nextFeed.id)
-    }else{
-      // ask server for more feeds
-    }
+    // bring a new feed to show
+    this.handleVote(feeds,id,history)
   }
   dislikePhoto(id){
     let {passPhoto,history,feeds,user} = this.props
@@ -36,7 +29,10 @@ export default class ImagePage extends Component{
     }
     // post to server
     postVotes({photoid : id, vote : 0})
-
+    // bring a new feed to show
+    this.handleVote(feeds,id,history)
+  }
+  handleVote(feeds, id,history){
     let currentIndex= _.findIndex(feeds,['id',Number(id)])
     let nextFeed= feeds[currentIndex+1]? feeds[currentIndex+1] : feeds[0]
     // show next photo
