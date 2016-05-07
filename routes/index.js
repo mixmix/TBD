@@ -10,9 +10,25 @@ router.get('/', function(req, res, next) {
 //doesn't work yet, waiting on functionality to be decided
 router.get('/getFeed', function(req, res, next) {
   if (req.session.userId){
-    db.getPhotosByDate().then(function(result) {
-      res.send(result)
-    })
+    db.getVotesByUserId({ id: req.session.userId })
+      .then(function(votes){
+        db.getPhotos()
+          .then(function(photos){
+            photos = photos.filter(function(photo){
+              if (photo.userId === req.session.userId) {
+                return false
+              }
+              var notVotedOn = false
+              votes.map(function(vote){
+                if (photo.id !== vote.photoId) {
+                  notVotedOn = true
+                }
+              })
+              return notVotedOn
+            })
+            res.send(photos)
+          })
+      })
   } else {
     db.getPhotosByDate().then(function(result) {
       res.send(result)
