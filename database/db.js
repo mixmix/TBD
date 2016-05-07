@@ -60,5 +60,12 @@ module.exports = {
   },
   postVote: function(vote){
     return knex('votes').insert(vote)
+  },
+  getCountriesByCount: function(){
+    return knex('countries').where('count', '>', 0)
+  },
+  getCitiesByCount: function(){
+    return knex('cities').where('count', '>', 0)
+
   }
 }

@@ -12,6 +12,6 @@ exports.seed = function(knex, Promise) {
     knex('cities').insert({id: 5, name: 'Los Angeles', count: 5}),
     knex('cities').insert({id: 6, name: 'Tokyo', count: 4}),
     knex('cities').insert({id: 7, name: 'Christchurch', count: 3}),
-    knex('cities').insert({id: 8, name: 'Melbourne', count: 2})
+    knex('cities').insert({id: 8, name: 'Melbourne', count: 0})
   );
 };

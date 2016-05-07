@@ -20,7 +20,19 @@ router.get('/getFeed', function(req, res, next) {
   }
 })
 
+//just gets locations that have got counts on them
 router.get('/locations', function(req,res,next){
+  db.getCountriesByCount()
+    .then(function(countries){
+      db.getCitiesByCount()
+        .then(function(cities){
+          res.send({ cities: cities, countries: countries})
+        })
+    })
+
+})
+
+router.get('/allLocations', function(req,res,next){
   db.getCountries()
     .then(function(countries){
       db.getCities()
