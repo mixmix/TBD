@@ -52,17 +52,21 @@ class Upload extends Component{
       return <option value={category.id} key={i}>{category.category}</option>
     }) : '';
    return (
-     <div>
+     <div id='uploadpage'>
        <form id='upload'>
        </form>
        <img src='' id='preview'/>
        <div class='progress_bar' style={divStyle}></div>
-       <label>Category</label>
-         <select onChange={this.handleChangeCtg.bind(this)}>
-            {options}
-         </select>
-         <label>location</label>
-         <input type='text' required id='location' onChange={this.handleChangeLct.bind(this)}/>
+       <div class='inputfield'>
+         <label>Category</label>
+           <select onChange={this.handleChangeCtg.bind(this)}>
+              {options}
+           </select>
+       </div>
+         <div class='inputfield'>
+           <label>location</label>
+           <input type='text' required id='location' onChange={this.handleChangeLct.bind(this)}/>
+         </div>
          <button id='submitUpload' disabled>Submit</button>
      </div>
    )
