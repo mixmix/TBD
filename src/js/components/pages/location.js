@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 // components
 import Feed  from '../feed'
 import Searching from './searching'
+//actions
+import { _updatePossibleLocations, _setMatchingLocations, _updateSearchString } from '../../actions/index'
 
 class Location extends Component{
   componentDidMount() {
@@ -14,16 +16,12 @@ class Location extends Component{
   }
 
   getPossibleLocations() {
-   //TODO move into the action creator
-   request.get('/locations')
-          .end((err, res) => {
-            let possibleLocations = JSON.parse(res.text)
-            possibleLocations = possibleLocations.countries
-            this.props.dispatch({
-              type: 'UPDATE_POSSIBLE_LOCATIONS',
-              possibleLocations: possibleLocations
-            })
-          })
+    request.get('/locations')
+           .end((err, res) => {
+             let possibleLocations = JSON.parse(res.text)
+             possibleLocations = possibleLocations.countries
+             this.props.dispatch(_updatePossibleLocations(possibleLocations))
+           })
   }
 
   matchCountryNameToCode(name, id){
@@ -45,14 +43,8 @@ class Location extends Component{
 
   updateState(searchedID, currentSearchString = this.props.filter.searchString) {
     let matchingLocations = this.props.feeds.filter(possible => (possible.countryId === searchedID))
-    this.props.dispatch({
-      type: 'SET_MATCHING_LOCATIONS',
-      filtered: matchingLocations
-    })
-    this.props.dispatch({
-      type:'UPDATE_SEARCHSTRING',
-      searchString: currentSearchString
-    })
+    this.props.dispatch(_setMatchingLocations(matchingLocations))
+    this.props.dispatch(_updateSearchString(currentSearchString))
   }
 
 
