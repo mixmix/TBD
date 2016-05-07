@@ -5,6 +5,8 @@ import _                 from 'lodash'
 import * as actions from '../../actions'
 import {postVotes}  from '../../reducers'
 
+import Swipeable from 'react-swipeable'
+
 export default class ImagePage extends Component{
   nextPhoto(history,id){
     let url='photo/'+(Number(id))
@@ -30,7 +32,7 @@ export default class ImagePage extends Component{
     postVotes({photoid : id, vote : 0})
 
     let currentIndex= _.findIndex(feeds,['id',Number(id)])
-    let nextFeed= feeds[currentIndex+1]? feeds[currentIndex+1] : feeds[0]
+    let nextFeed= feeds[currentIndex+1]
     // show next photo
     if(nextFeed){
       this.nextPhoto(history,nextFeed.id)
@@ -41,6 +43,34 @@ export default class ImagePage extends Component{
   followOwner(){
     // darken color of this button, and post to server
   }
+  report(id){
+    //report inappropriate photo
+    console.log('Swiped down')
+
+    let {history, feeds} = this.props
+    let currentIndex= _.findIndex(feeds,['id',Number(id)])
+    let nextFeed= feeds[currentIndex+1]
+    // show next photo
+    if(nextFeed){
+      this.nextPhoto(history,nextFeed.id)
+    }else{
+      // ask server for more feeds
+    }
+  }
+  addToFavorites(id){
+    //add photo to favorites for future viewing
+    console.log('Added to favorites')
+
+    let {history, feeds} = this.props
+    let currentIndex= _.findIndex(feeds,['id',Number(id)])
+    let nextFeed= feeds[currentIndex+1]
+    // show next photo
+    if(nextFeed){
+      this.nextPhoto(history,nextFeed.id)
+    }else{
+      // ask server for more feeds
+    }
+  }
  render(){
    let {id}= this.props.params
    let {feeds} = this.props
@@ -50,7 +80,14 @@ export default class ImagePage extends Component{
    }
    return (
      <div>
+      <Swipeable onSwipedRight={this.likePhoto.bind(this, id)}
+                 onSwipedLeft={this.dislikePhoto.bind(this, id)}
+                 onSwipedDown={this.report.bind(this, id)}
+                 onSwipedUp={this.addToFavorites.bind(this, id)}
+                 preventDefaultTouchmoveEvent={false}
+                 >
         <img src={feed.link} />
+      </Swipeable>
         <div>
           <button onClick={this.dislikePhoto.bind(this,id)}>Pass</button>
           <button onClick={this.likePhoto.bind(this,id)}>On Fleek</button>
