@@ -30,6 +30,11 @@ class App extends Component{
             feeds=JSON.parse(feeds.text)
             store.dispatch({type:'LOAD_FEEDS',feeds})
           })
+   request.get('/getCategories')
+          .end((err,categories) => {
+            categories= JSON.parse(categories.text)
+            store.dispatch({type:'LOAD_CATEGORIES',categories})
+          })
  }
  render(){
    return (

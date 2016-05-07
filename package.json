@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --compilers js:babel-register --recursive",
     "dev": "webpack-dev-server --content-base public/",
     "start": "node ./bin/www",
     "lint": "eslint ./seeds/users.js"
@@ -29,6 +29,7 @@
     "history": "^2.1.1",
     "jade": "^1.11.0",
     "knex": "^0.10.0",
+    "knex-csv-seeder": "^0.4.0",
     "lodash": "^4.11.2",
     "morgan": "^1.7.0",
     "node-sass": "^3.7.0",
@@ -38,9 +39,11 @@
     "pg": "^4.5.5",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
+    "react-hammerjs": "^0.4.6",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.0",
     "react-router-redux": "^4.0.4",
+    "react-swipeable": "^3.3.1",
     "redux": "^3.5.2",
     "sass-loader": "^3.2.0",
     "serve-favicon": "^2.3.0",
@@ -57,6 +60,7 @@
   "homepage": "https://github.com/andrew-travis-wadman/TBD#readme",
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",
+    "babel-register": "^6.8.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
     "eslint": "^2.9.0",
@@ -64,6 +68,7 @@
     "eslint-plugin-promise": "^1.1.0",
     "eslint-plugin-standard": "^1.3.2",
     "knex-csv-seeder": "^0.4.0",
+    "mocha": "^2.4.5",
     "supertest": "^1.2.0",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
