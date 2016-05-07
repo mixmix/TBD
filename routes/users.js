@@ -51,7 +51,7 @@ router.post('/login', function(req,res,next){
 router.post('/newImage', function(req, res, next) {
   var photoData = {
     link: req.body.link,
-    category: req.body.categoryId,
+    categoryId: req.body.categoryId,
     country: req.body.country,
     city: req.body.city,
     userId: req.session.userId,
@@ -59,7 +59,7 @@ router.post('/newImage', function(req, res, next) {
     rating: 0
   }
   db.insertPhoto(photoData).then(function(response) {
-    res.send('Hello there')
+    res.end();
   })
 })
 
