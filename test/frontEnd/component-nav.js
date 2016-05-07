@@ -7,7 +7,7 @@ let assert = require('chai').assert;
 const data ={
   pathname:'/'
 }
-describe.only('Nav component',()=>{
+describe('Nav component',()=>{
   it('it should render a nav element',() =>{
     const wrapper = shallow(<Nav location={data}/>)
     expect(wrapper.is('nav')).to.equal(true)
