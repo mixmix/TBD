@@ -3,7 +3,7 @@ import {connect}         from 'react-redux'
 
 class Profile extends Component{
  render(){
-   if(this.props.user){
+   if(this.props.user.name){
      var {photos,name,content}= this.props.user
      photos.length>0 ?
      content = photos.map((photo)=>{

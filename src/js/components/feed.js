@@ -6,7 +6,9 @@ export default class Feed extends Component{
    const {link,id}= this.props
    return (
      <div className="feed">
-      <Link to={`photo/${id}`}><img src={link} /></Link>
+      <Link to={`photo/${id}`}>
+        <img src={link} />
+      </Link>
      </div>
    )
  }
