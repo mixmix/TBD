@@ -69,6 +69,11 @@ module.exports = {
   },
   getCitiesByCount: function(){
     return knex('cities').where('count', '>', 0)
+  },
+  getPhotosByDateNotVotedOn: function(){
 
+    return knex('photos').crossJoin(
+      'votes', 'photos.id', 'votes.photoId'
+    )
   }
 }

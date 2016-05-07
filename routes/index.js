@@ -32,6 +32,7 @@ router.get('/locations', function(req,res,next){
 
 })
 
+//gets all locations
 router.get('/allLocations', function(req,res,next){
   db.getCountries()
     .then(function(countries){

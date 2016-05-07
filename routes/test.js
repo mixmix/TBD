@@ -23,4 +23,10 @@ router.get('/getVotes', function(req,res,next){
 router.get('/test', function(req,res,next){
   res.send('test')
 })
+
+router.get('/feedByUser', function(req,res,next){
+  db.getPhotosByDateNotVotedOn().then(function(result){
+    res.send(result)    
+  })
+})
 module.exports = router;
