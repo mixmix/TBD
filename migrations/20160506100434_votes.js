@@ -1,9 +1,9 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTableIfNotExists('votes', function(table) {
     table.increments();
-    table.integer('vote');
-    table.integer('userId');
-    table.integer('photoId');
+    table.integer('vote').notNullable();
+    table.integer('userId').notNullable();
+    table.integer('photoId').notNullable();
     table.timestamps();
     table.unique(['photoId', 'userId'])
   })
