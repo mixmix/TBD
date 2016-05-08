@@ -62,11 +62,11 @@ router.post('/newImage', function(req, res, next) {
   var photoData = {
     link: req.body.link,
     categoryId: req.body.categoryId,
-    rating: 0
-    // countryId: req.body.countryId,
-    // cityId: req.body.cityId,
-    // userId: req.session.userId,
-    // caption: req.body.caption,
+    rating: 0,
+    countryId: req.body.countryId,
+    cityId: req.body.cityId,
+    userId: req.session.userId,
+    caption: req.body.caption,
 
   }
   db.insertPhoto(photoData).then(function(response) {
