@@ -16,6 +16,7 @@ export default class ImagePage extends Component{
       history.push('login')
       return ;
     }
+    fleekPhoto(id)
     // post to server
     postVotes({photoid : id, vote : 1})
     // bring a new feed to show
@@ -27,6 +28,7 @@ export default class ImagePage extends Component{
       history.push('login')
       return ;
     }
+    passPhoto(id)
     // post to server
     postVotes({photoid : id, vote : 0})
     // bring a new feed to show
@@ -74,10 +76,21 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatcherToProps =(dispatch) => {
+  return {
+    fleekPhoto: (id) =>{
+      dispatch(actions._fleekPhoto(id))
+    },
+    passPhoto: (id) =>{
+      dispatch(actions._passPhoto(id))
+    }
+  }
+}
 
 // export for test
 export {ImagePage}
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatcherToProps
 )(ImagePage)

@@ -7,9 +7,14 @@ export default function (state=fakeState.images, action){
     case 'LOAD_FEEDS':
       return action.feeds
       break;
-    case 'PASS_PHOTO':
-      return state
-      break;
+    case 'PASS_PHOTO':{
+      const nextState = state.filter((o) => o.id !== Number(action.id))
+      return nextState
+      break;}
+    case 'FLEEK_PHOTO':{
+      const nextState = state.filter((o) => o.id !== Number(action.id))
+      return nextState
+      break;}
     case 'ADD_NEW_FEED':
       let nextState= state.concat([])
       nextState.push(action.feed)

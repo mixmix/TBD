@@ -8,14 +8,16 @@ class Nav extends Component{
    let indexActive=location.pathname==='/'? 'active' : ''
    let profileActive=location.pathname.match(/^\/profile/)? 'active' : ''
    let locationActive=location.pathname.match(/^\/location/)? 'active' : ''
+   let uploadActive=location.pathname.match(/^\/upload/)? 'active' : ''
+   let loginActive=location.pathname.match(/^\/login/)? 'active' : ''
    const customizedNav= user.name!=='visitor'?
-   [<Link to='upload'>Upload</Link>,
-   <Link to='profile' class={profileActive}>profile</Link>] :
-   <Link to='login'>login</Link>
+   [<Link to='upload' class={uploadActive} key={Date.now()}>Upload</Link>,
+    <Link to='profile' class={profileActive} key={Date.now()+11}>profile</Link>] :
+    <Link to='login' class={loginActive} key={Date.now()}>login</Link>
    return (
      <nav>
-      <Link to='/' class={indexActive}>feeds</Link>
-      <Link to='location' class={locationActive}>location</Link>
+      <Link to='/' class={indexActive} key='1'>feeds</Link>
+      <Link to='location' class={locationActive} key='2'>location</Link>
       {customizedNav}
      </nav>
    )
