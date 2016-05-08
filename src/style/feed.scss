@@ -8,7 +8,7 @@
     margin: 0;
 
     img {
-      width: 100%; 
+      width: 100%;
     }
   }
 }
@@ -16,22 +16,5 @@
 .grid {
   .feed {
     max-width: 25%;
-  }
-}
-
-.settings-bar {
-  background-color: $blue;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-
-  .settings-btn {
-    color: $light;
-    min-height: 5vh;
-    border: 1px $light solid;
-    margin: 3px;
-    text-align: center;
-
-    width: 10%;
   }
 }

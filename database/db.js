@@ -4,16 +4,16 @@ var knexConfig = require(__dirname + '/../knexfile');
 var knex = Knex(knexConfig[process.env.NODE_ENV || 'development'])
 
 module.exports = {
-  getUsers: function() {
+  getUsers: function() { //not needed for production
     return knex.select().table('users')
   },
-  getPhotos: function() {
+  getPhotos: function() { //gets all photos
     return knex.select().table('photos')
   },
-  getPhotosByDate: function() {
+  getPhotosByDate: function() { //gets all photos by date
     return knex.select().table('photos').limit(50).orderBy('created_at','desc')
   },
-  findOrCreate: function(user, cb){
+  findOrCreate: function(user, cb){ //finds or create photos
       knex('users').where(user)
         .then(function(result){
           if (result.length > 0) {

@@ -25,8 +25,24 @@ router.get('/test', function(req,res,next){
 })
 
 router.get('/feedByUser', function(req,res,next){
-  db.getPhotosByDateNotVotedOn().then(function(result){
-    res.send(result)    
-  })
+  db.getVotesByUserId({ id: req.session.userId })
+    .then(function(votes){
+      db.getPhotos()
+        .then(function(photos){
+          photos = photos.filter(function(photo){
+            if (photo.userId === req.session.userId) {
+              return false
+            }
+            var notVotedOn = false
+            votes.map(function(vote){
+              if (photo.id !== vote.photoId) {
+                notVotedOn = true
+              }
+            })
+            return notVotedOn
+          })
+          res.send(photos)
+        })
+    })
 })
 module.exports = router;

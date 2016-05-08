@@ -10,6 +10,7 @@ import { createStore }         from 'redux'
 import request                 from 'superagent'
 //import the reducer
 import reducer        from './reducers'
+import { _updatePossibleLocations } from './actions'
 //import the components
 import Layout         from './components/pages/layout'
 import Feedcontainer  from './components/pages/feedcontainer'
@@ -35,6 +36,13 @@ class App extends Component{
             categories= JSON.parse(categories.text)
             store.dispatch({type:'LOAD_CATEGORIES',categories})
           })
+   request.get('/locations')
+         .end((err, res) => {
+           let possibleLocations = JSON.parse(res.text)
+           possibleLocations = possibleLocations.countries
+           store.dispatch(_updatePossibleLocations(possibleLocations))
+         })
+
  }
  render(){
    return (
