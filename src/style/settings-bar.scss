@@ -8,6 +8,7 @@
   width: 100vw;
   position: fixed;
   top: 0;
+  box-shadow: 0 5px 16px 0px $dark;;
 
   .settings-btn {
     color: $light;
@@ -34,5 +35,6 @@
     font-size: 1.3em;
     line-height: 1.5em;
     text-indent: 5%;
+    box-shadow: -1px -3px 42px -15px $light;
   }
 }

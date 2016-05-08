@@ -20,6 +20,13 @@ export default class ImagePage extends Component{
     }, 300)
   }
 
+  handleLeft(id) {
+    document.querySelector('.single-view').classList.add('slide-left')
+    let timerID = window.setTimeout(() => {
+      this.likePhoto(id)
+    }, 300)
+  }
+
   likePhoto(id){
     document.querySelector('.single-view').classList.remove('slide-right')
     window.clearTimeout("timerID")
@@ -35,6 +42,8 @@ export default class ImagePage extends Component{
     this.handleVote(feeds,id,history)
   }
   dislikePhoto(id){
+    document.querySelector('.single-view').classList.remove('slide-left')
+    window.clearTimeout("timerID")
     let {passPhoto,history,feeds,user} = this.props
     if(user.name === 'visitor'){
       history.push('login')
@@ -80,7 +89,7 @@ export default class ImagePage extends Component{
      <div className="single-view" ref="container">
       <Swipeable className="single-photo-wrapper"
                  onSwipedRight={this.handleRight.bind(this, id)}
-                 onSwipedLeft={this.dislikePhoto.bind(this, id)}
+                 onSwipedLeft={this.handleLeft.bind(this, id)}
                  onSwipedDown={this.report.bind(this, id)}
                  onSwipedUp={this.addToFavorites.bind(this, id)}
                  preventDefaultTouchmoveEvent={false}
@@ -89,9 +98,9 @@ export default class ImagePage extends Component{
       </Swipeable>
       <span>up</span><span>down</span><span>left</span><span>right</span>
         <div className="single-controls">
-          <button onClick={this.dislikePhoto.bind(this,id)}>Pass</button>
-          <button onClick={this.likePhoto.bind(this,id)}>On Fleek</button>
-          <button onClick={this.followOwner.bind(this)}>Follow Me</button>
+          <button className="btn pass" onClick={this.handleLeft.bind(this,id)}>meh.</button>
+          <button className="btn fleek" onClick={this.handleRight.bind(this,id)}>fleek!</button>
+          <button className="btn" onClick={this.followOwner.bind(this)}>follow.</button>
 
         </div>
      </div>

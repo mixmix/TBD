@@ -1,0 +1,20 @@
+.btn {
+  border-radius: 10px;
+  font-size: 1.2em;
+  font-family: $sans;
+  color: $light;
+  padding: 15px 15px;
+  text-decoration: none;
+  background-color: $blue;
+  border: none;
+  border-right: 1px solid darken($blue, 10%);
+  border-bottom: 3px solid darken($blue, 10%);
+  text-shadow: 0 -2px darken($blue, 10%);
+  transition: all 0.1s;
+  box-shadow: -3px -5px 12px -7px $dark;
+
+  &:active {
+    transform: translate(0, 5px);
+    border-bottom: 1px solid;
+  }
+}
