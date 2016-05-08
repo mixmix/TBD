@@ -1,4 +1,3 @@
-import request from 'superagent'
 
 const _updatePossibleLocations = (locations) => {
   return {
@@ -37,6 +36,13 @@ const _fleekPhoto = (id) =>{
   }
 }
 
+const _newPhoto = (url) => {
+  return {
+    type:'ADD_NEW_FEED',
+    feed:{id:Date.now(),link:url}
+  }
+}
+
 
 
 export {
@@ -44,5 +50,6 @@ export {
   _fleekPhoto,
   _updatePossibleLocations,
   _setMatchingLocations,
-  _updateSearchString
+  _updateSearchString,
+  _newPhoto
 }

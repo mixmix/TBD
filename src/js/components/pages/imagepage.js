@@ -51,31 +51,13 @@ export default class ImagePage extends Component{
   }
   report(id){
     //report inappropriate photo
-    console.log('Swiped down')
-
     let {history, feeds} = this.props
-    let currentIndex= _.findIndex(feeds,['id',Number(id)])
-    let nextFeed= feeds[currentIndex+1]
-    // show next photo
-    if(nextFeed){
-      this.nextPhoto(history,nextFeed.id)
-    }else{
-      // ask server for more feeds
-    }
+    this.handleVote(id)
   }
   addToFavorites(id){
     //add photo to favorites for future viewing
-    console.log('Added to favorites')
-
     let {history, feeds} = this.props
-    let currentIndex= _.findIndex(feeds,['id',Number(id)])
-    let nextFeed= feeds[currentIndex+1]
-    // show next photo
-    if(nextFeed){
-      this.nextPhoto(history,nextFeed.id)
-    }else{
-      // ask server for more feeds
-    }
+    this.handleVote(id)
   }
  render(){
    let {id}= this.props.params
@@ -94,6 +76,7 @@ export default class ImagePage extends Component{
                  >
         <img src={feed.link} />
       </Swipeable>
+      <span>up</span><span>down</span><span>left</span><span>right</span>
         <div>
           <button onClick={this.dislikePhoto.bind(this,id)}>Pass</button>
           <button onClick={this.likePhoto.bind(this,id)}>On Fleek</button>

@@ -7,8 +7,6 @@ var expect = require('chai').expect;
 //database unit tests
 //gets photos sorted by date - getPhotosByDate
 //find or create - findOrCreate user
-//getUserPhotos - gets photos for a specific user
-//getUser - gets a specific user
 //insert user
 //insert photo
 //get feed by location
@@ -24,6 +22,23 @@ describe('Database', function() {
         .then(function(result) {
         expect(result.length).to.be.equal(1)
         expect(result[0].fullName).to.be.equal('Andrew Wadman');
+        done()
+      })
+    })
+    it('should return the photos of a specific user', function(done) {
+      var userId = 1
+      db.getUserPhotos({ id: userId })
+        .then(function(result) {
+          expect(result[0].userId).to.be.equal(userId);
+        done()
+      })
+    })
+  })
+  describe('Photos', function(){
+    it('should return photos sorted by date', function(done) {
+      db.getPhotosByDate()
+        .then(function(result) {
+        expect(result.length).to.be.equal(4)
         done()
       })
     })

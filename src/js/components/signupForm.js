@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {postSignin}      from '../reducers'
+import {postSignin,loadFeeds}      from '../reducers'
 import { connect }       from 'react-redux'
 
 class Signup extends Component{
@@ -30,6 +30,7 @@ const mapDispatchToProps= (dispatch) =>{
   return {
     successLogin :(user)=>{
       dispatch({type:'USER_LOGIN',user})
+      loadFeeds(dispatch)
     }
   }
 }
