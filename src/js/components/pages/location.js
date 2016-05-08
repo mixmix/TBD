@@ -11,18 +11,6 @@ import Searching from './searching'
 import { _updatePossibleLocations, _setMatchingLocations, _updateSearchString } from '../../actions/index'
 
 class Location extends Component{
-  componentDidMount() {
-   this.getPossibleLocations()
-  }
-
-  getPossibleLocations() {
-    request.get('/locations')
-           .end((err, res) => {
-             let possibleLocations = JSON.parse(res.text)
-             possibleLocations = possibleLocations.countries
-             this.props.dispatch(_updatePossibleLocations(possibleLocations))
-           })
-  }
 
   matchCountryNameToCode(name, id){
     let found = _.find(this.props.filter.possibleLocations, ['name', name])
@@ -76,3 +64,6 @@ class Location extends Component{
 }
 
 export default connect(state => state)(Location)
+export {
+  Location
+}

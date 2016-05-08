@@ -10,18 +10,25 @@
 @import './feed.scss';
 @import './upload.scss';
 @import "./singlepage.scss";
+@import './settings-bar.scss';
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding:0;
 }
 
 .page {
   height: 90vh;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 body {
   font-size: 100%;
   background-color: $light;
   font-family: $serif;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
 }
