@@ -23,24 +23,30 @@ export default class ImagePage extends Component{
   likePhoto(id){
     document.querySelector('.single-view').classList.remove('slide-right')
     window.clearTimeout("timerID")
-    let {fleekPhoto,history,feeds} = this.props
+    let {fleekPhoto,history,feeds,user} = this.props
+    if(user.name === 'visitor'){
+      history.push('login')
+      return ;
+    }
+    fleekPhoto(id)
     // post to server
     postVotes({photoid : id, vote : 1})
-
-    let currentIndex= _.findIndex(feeds,['id',Number(id)])
-    let nextFeed= feeds[currentIndex+1]? feeds[currentIndex+1] : feeds[0]
-    // show next photo
-    if(nextFeed){
-      this.nextPhoto(history,nextFeed.id)
-    }else{
-      // ask server for more feeds
-    }
+    // bring a new feed to show
+    this.handleVote(feeds,id,history)
   }
   dislikePhoto(id){
-    let {passPhoto,history,feeds} = this.props
+    let {passPhoto,history,feeds,user} = this.props
+    if(user.name === 'visitor'){
+      history.push('login')
+      return ;
+    }
+    passPhoto(id)
     // post to server
     postVotes({photoid : id, vote : 0})
-
+    // bring a new feed to show
+    this.handleVote(feeds,id,history)
+  }
+  handleVote(feeds, id,history){
     let currentIndex= _.findIndex(feeds,['id',Number(id)])
     let nextFeed= feeds[currentIndex+1]
     // show next photo
@@ -55,31 +61,13 @@ export default class ImagePage extends Component{
   }
   report(id){
     //report inappropriate photo
-    console.log('Swiped down')
-
     let {history, feeds} = this.props
-    let currentIndex= _.findIndex(feeds,['id',Number(id)])
-    let nextFeed= feeds[currentIndex+1]
-    // show next photo
-    if(nextFeed){
-      this.nextPhoto(history,nextFeed.id)
-    }else{
-      // ask server for more feeds
-    }
+    this.handleVote(id)
   }
   addToFavorites(id){
     //add photo to favorites for future viewing
-    console.log('Added to favorites')
-
     let {history, feeds} = this.props
-    let currentIndex= _.findIndex(feeds,['id',Number(id)])
-    let nextFeed= feeds[currentIndex+1]
-    // show next photo
-    if(nextFeed){
-      this.nextPhoto(history,nextFeed.id)
-    }else{
-      // ask server for more feeds
-    }
+    this.handleVote(id)
   }
  render(){
    let {id}= this.props.params
@@ -99,11 +87,13 @@ export default class ImagePage extends Component{
                  >
         <img src={feed.link} />
       </Swipeable>
-      <div className="single-controls">
-        <button className="pass" onClick={this.dislikePhoto.bind(this,id)}>Pass</button>
-        <button className="fleek" onClick={this.likePhoto.bind(this,id)}>On Fleek</button>
-        <button className="follow" onClick={this.followOwner.bind(this)}>Follow Me</button>
-      </div>
+      <span>up</span><span>down</span><span>left</span><span>right</span>
+        <div className="single-controls">
+          <button onClick={this.dislikePhoto.bind(this,id)}>Pass</button>
+          <button onClick={this.likePhoto.bind(this,id)}>On Fleek</button>
+          <button onClick={this.followOwner.bind(this)}>Follow Me</button>
+
+        </div>
      </div>
    )
  }
@@ -112,14 +102,26 @@ export default class ImagePage extends Component{
 
 const mapStateToProps = (state) => {
   return {
-    feeds : state.feeds
+    feeds : state.feeds,
+    user : state.user
   }
 }
 
+const mapDispatcherToProps =(dispatch) => {
+  return {
+    fleekPhoto: (id) =>{
+      dispatch(actions._fleekPhoto(id))
+    },
+    passPhoto: (id) =>{
+      dispatch(actions._passPhoto(id))
+    }
+  }
+}
 
 // export for test
 export {ImagePage}
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatcherToProps
 )(ImagePage)

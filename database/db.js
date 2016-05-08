@@ -28,7 +28,7 @@ module.exports = {
           }
         })
   },
-  getVotes: function() {
+  getVotes: function() { //gets all votes
     return knex('votes')
   },
   getUserPhotos: function(user){
@@ -70,9 +70,6 @@ module.exports = {
     return knex('votes').insert(vote)
       .then(function(result){
         knex('photos').where('id', '=', vote.photoId).increment('rating', vote.vote)
-          .then(function(voteResult){
-            return knex('photos').where('photoId', '=', vote.photoId)
-          })
       })
   },
   getCountriesByCount: function(){
@@ -84,7 +81,10 @@ module.exports = {
   getPhotosByDateNotVotedOn: function(){
     return knex('photos').crossJoin('votes', 'photos.id', 'votes.photoId')
   },
-  getVotesByUserId: function(user){
+  getVotesByUserId: function(user) {
     return knex('votes').where(user)
+  },
+  getPhotosByUserId: function(userId) {
+    return knex('photos').where({userId: userId})
   }
 }

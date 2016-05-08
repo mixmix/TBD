@@ -16,7 +16,6 @@ router.get('/getUserPhotos', function(req,res,next){
   } else {
     var user = { id: req.session.userId }
     db.getUserPhotos(user).then(function(result){
-      console.log('user created:', result)
       res.send(result)
     })
   }
@@ -29,7 +28,9 @@ router.post('/new', function(req,res,next){
     var newUser = { fullName: user.fullName, email: user.email, passwordHash: passwordHash, styleRating: 0, connoisseurRating: 0 }
     db.createUser(newUser).then(function(result){
       req.session.userId = result[0] //saves the user id returned from the new user created to the session
-      res.send(newUser)
+      res.send({ name: user.fullName, photos: [] })
+    }).catch(function(error){
+      res.status(500).send("ERROR User Exists")
     })
   })
 })
@@ -38,11 +39,20 @@ router.post('/new', function(req,res,next){
 router.post('/login', function(req,res,next){
   var checkUser = { email: req.body.email}
   db.getUser(checkUser).then(function(returnedUsers){
+    if (returnedUsers.length === 0) {
+      res.status(403).send({ error: 'user not found'})
+      return
+    }
     var returnedUser = returnedUsers[0]
     var validPassword = bcrypt.compareSync(req.body.password, returnedUser.passwordHash);
     if (validPassword){
       req.session.userId = returnedUser.id
-      res.send({ name: returnedUser.fullName }) //sends the username once signed in
+      db.getPhotosByUserId(req.session.userId)
+        .then(function(photos){
+          res.send({ name: returnedUser.fullName, photos: photos })
+        })
+    } else {
+      res.status(403).send({ error: 'invalid password'})
     }
   })
 })
@@ -51,12 +61,13 @@ router.post('/login', function(req,res,next){
 router.post('/newImage', function(req, res, next) {
   var photoData = {
     link: req.body.link,
-    category: req.body.categoryId,
-    country: req.body.country,
-    city: req.body.city,
-    userId: req.session.userId,
-    caption: req.body.caption,
+    categoryId: req.body.categoryId,
     rating: 0
+    // countryId: req.body.countryId,
+    // cityId: req.body.cityId,
+    // userId: req.session.userId,
+    // caption: req.body.caption,
+
   }
   db.insertPhoto(photoData).then(function(response) {
     res.send('Hello there')
@@ -69,12 +80,25 @@ router.post('/vote', function(req,res,next){
     var vote = { vote: req.body.vote, photoId: req.body.photoId, userId: req.session.userId}
     db.postVote(vote)
       .then(function(result){
-        res.send(result)
+        res.send({ message: "success" })
+      })
+      .catch(function(error){
+        res.status(400).send(error)
       })
   } else {
-    res.send({})
+    res.status(400).send({})
   }
+})
 
+router.get('/getUserPhotos', function(req, res, next){
+  if(req.session.userId){
+    db.getPhotosByUserId(req.session.userId)
+      .then(function(photos){
+        res.send(photos)
+      })
+  } else {
+    res.status(400).send({})
+  }
 })
 
 module.exports = router;

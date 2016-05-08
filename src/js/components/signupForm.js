@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import request           from 'superagent'
+import {postSignin,loadFeeds}      from '../reducers'
 import { connect }       from 'react-redux'
 
 class Signup extends Component{
@@ -9,17 +9,7 @@ class Signup extends Component{
    let fullName = this.refs.name.value
    let password = this.refs.password.value
    let {successLogin,history} = this.props
-   request.post('/users/new')
-          .send({email,password,fullName})
-          .end((err,user)=>{
-            if(err){
-              console.log('signup err')
-            }else{
-              user=JSON.parse(user.text)
-              successLogin(user) // set user to state
-              history.push('/') // lead user to home page
-            }
-          })
+   postSignin('/users/new',{email,password,fullName},history,successLogin)
  }
  render(){
    return(
@@ -40,6 +30,7 @@ const mapDispatchToProps= (dispatch) =>{
   return {
     successLogin :(user)=>{
       dispatch({type:'USER_LOGIN',user})
+      loadFeeds(dispatch)
     }
   }
 }
