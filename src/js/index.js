@@ -40,13 +40,12 @@ class App extends Component{
            store.dispatch(_updatePossibleLocations(possibleLocations))
          })
    request.get('/users/loggedIn')
-   .end((err,user)=>{
-     user = JSON.parse(user.text)
-     if(user.name) {
-       store.dispatch({type:'USER_LOGIN',user})
-     }
-   })
-
+          .end((err,user)=>{
+            user = JSON.parse(user.text)
+            if(user.name){
+              store.dispatch({type:'USER_LOGIN',user})
+            }
+          })
  }
  render(){
    return (
