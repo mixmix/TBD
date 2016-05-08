@@ -4,7 +4,7 @@ import '../style/index.scss'
 import React,{Component}       from 'react'
 import {render}                from 'react-dom'
 import { Provider }            from 'react-redux'
-import { Router, Route, IndexRoute, hashHistory } from "react-router";
+import { Router, Route, IndexRoute, browserHistory } from "react-router";
 import { syncHistoryWithStore} from 'react-router-redux'
 import { createStore }         from 'redux'
 import request                 from 'superagent'
@@ -21,7 +21,7 @@ import Login          from './components/pages/login'
 import Upload         from './components/pages/upload'
 
 const store = createStore(reducer)
-const history = syncHistoryWithStore(hashHistory, store)
+const history = syncHistoryWithStore(browserHistory, store)
 
 class App extends Component{
  componentDidMount(){

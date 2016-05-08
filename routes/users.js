@@ -101,4 +101,19 @@ router.get('/getUserPhotos', function(req, res, next){
   }
 })
 
+router.get('/loggedIn', function(req, res, next){
+  if (req.session.userId){
+    var checkUser = { id: req.session.userId }
+    db.getUser(checkUser).then(function(returnedUsers){
+      var returnedUser = returnedUsers[0]
+      db.getPhotosByUserId(req.session.userId)
+        .then(function(photos){
+          res.send({ name: returnedUser.fullName, photos: photos })
+        })
+    })
+  } else {
+    res.status(400).send({})
+  }
+})
+
 module.exports = router;
