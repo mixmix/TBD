@@ -51,7 +51,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-console.log(process.env.DOMAIN + "/auth/facebook/callback")
 // Facebook strategy
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
@@ -61,7 +60,6 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     var user = profile
-    console.log(user)
     var checkUser = {}
     checkUser.fullName = user.displayName
     checkUser.email = user.emails[0].value
