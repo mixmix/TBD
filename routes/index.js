@@ -88,7 +88,4 @@ router.get('/getCategories', function(req, res, next) {
 })
 
 
-router.get('*', function (request, response){
-  response.sendFile(path.resolve(__dirname, './../public', 'index.html'))
-})
 module.exports = router;
