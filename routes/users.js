@@ -62,11 +62,11 @@ router.post('/newImage', function(req, res, next) {
   var photoData = {
     link: req.body.link,
     categoryId: req.body.categoryId,
-    rating: 0
-    // countryId: req.body.countryId,
-    // cityId: req.body.cityId,
-    // userId: req.session.userId,
-    // caption: req.body.caption,
+    rating: 0,
+    countryId: req.body.countryId,
+    cityId: req.body.cityId,
+    userId: req.session.userId,
+    caption: req.body.caption,
 
   }
   db.insertPhoto(photoData).then(function(response) {
@@ -96,6 +96,21 @@ router.get('/getUserPhotos', function(req, res, next){
       .then(function(photos){
         res.send(photos)
       })
+  } else {
+    res.status(400).send({})
+  }
+})
+
+router.get('/loggedIn', function(req, res, next){
+  if (req.session.userId){
+    var checkUser = { id: req.session.userId }
+    db.getUser(checkUser).then(function(returnedUsers){
+      var returnedUser = returnedUsers[0]
+      db.getPhotosByUserId(req.session.userId)
+        .then(function(photos){
+          res.send({ name: returnedUser.fullName, photos: photos })
+        })
+    })
   } else {
     res.status(400).send({})
   }

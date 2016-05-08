@@ -4,7 +4,7 @@ import '../style/index.scss'
 import React,{Component}       from 'react'
 import {render}                from 'react-dom'
 import { Provider }            from 'react-redux'
-import { Router, Route, IndexRoute, hashHistory } from "react-router";
+import { Router, Route, IndexRoute, browserHistory } from "react-router";
 import { syncHistoryWithStore} from 'react-router-redux'
 import { createStore }         from 'redux'
 import request                 from 'superagent'
@@ -21,7 +21,7 @@ import Login          from './components/pages/login'
 import Upload         from './components/pages/upload'
 
 const store = createStore(reducer)
-const history = syncHistoryWithStore(hashHistory, store)
+const history = syncHistoryWithStore(browserHistory, store)
 
 class App extends Component{
  componentDidMount(){
@@ -53,11 +53,11 @@ class App extends Component{
        <Router history={history}>
          <Route path="/" component={Layout}>
            <IndexRoute component={Feedcontainer}></IndexRoute>
-           <Route path="photo/:id" component={Imagepage}></Route>
-           <Route path="profile" component={Profile}></Route>
-           <Route path='location' component={Location}></Route>
-           <Route path='login' component={Login}></Route>
-           <Route path='upload' component={Upload}></Route>
+           <Route path="/photo/:id" component={Imagepage}></Route>
+           <Route path="/profile" component={Profile}></Route>
+           <Route path='/location' component={Location}></Route>
+           <Route path='/login' component={Login}></Route>
+           <Route path='/upload' component={Upload}></Route>
          </Route>
        </Router>
      </Provider>

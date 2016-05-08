@@ -9,7 +9,7 @@ import Swipeable from 'react-swipeable'
 
 export default class ImagePage extends Component{
   nextPhoto(history,id){
-    let url='photo/'+(Number(id))
+    let url='/photo/'+(Number(id))
     history.replace(url)
   }
 

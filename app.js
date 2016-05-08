@@ -1,5 +1,6 @@
 require('dotenv').config();
 var path = require('path');
+var db = require('./database/db');
 //express
 var express = require('express');
 //var favicon = require('serve-favicon');
@@ -50,6 +51,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+console.log(process.env.DOMAIN + "/auth/facebook/callback")
 // Facebook strategy
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
