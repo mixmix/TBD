@@ -15,11 +15,6 @@ export default function (state=fakeState.images, action){
       const nextState = state.filter((o) => o.id !== Number(action.id))
       return nextState
       break;}
-    case 'ADD_NEW_FEED':
-      let nextState= state.concat([])
-      nextState.push(action.feed)
-      return nextState
-      break;
     default:
       return state
   }
