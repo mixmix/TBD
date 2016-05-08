@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import {connect}         from 'react-redux'
 import {postNewFeed}     from '../../reducers'
+import {_newPhoto}       from '../../actions'
 
 class Upload extends Component{
  constructor(){
@@ -22,7 +23,7 @@ class Upload extends Component{
      $('#submitUpload').attr('disabled',false).click((e)=>{
        e.preventDefault()
        if( $('#location').val() ){
-         that.props.dispatch({type:'ADD_NEW_FEED',feed:{id:Date.now(),link:url}})
+         that.props.dispatch(_newPhoto(url))
          that.props.history.push('/')
          let newFeed= {categoryId: that.state.id, link:url}
          //post add to feeds, and post to server

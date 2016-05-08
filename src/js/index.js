@@ -25,7 +25,6 @@ const history = syncHistoryWithStore(hashHistory, store)
 
 class App extends Component{
  componentDidMount(){
-   $.cloudinary.config({ cloud_name: 'vicken', api_key: '226983578886724'})
    request.get('/getFeed')
           .end((err,feeds)=>{
             feeds=JSON.parse(feeds.text)
