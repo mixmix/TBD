@@ -16,7 +16,6 @@ router.get('/getUserPhotos', function(req,res,next){
   } else {
     var user = { id: req.session.userId }
     db.getUserPhotos(user).then(function(result){
-      console.log('user created:', result)
       res.send(result)
     })
   }
@@ -29,7 +28,9 @@ router.post('/new', function(req,res,next){
     var newUser = { fullName: user.fullName, email: user.email, passwordHash: passwordHash, styleRating: 0, connoisseurRating: 0 }
     db.createUser(newUser).then(function(result){
       req.session.userId = result[0] //saves the user id returned from the new user created to the session
-      res.send(newUser)
+      res.send({ name: result[0].fullName, photos: [] })
+    }).catch(function(error){
+      res.status(500).send("ERROR User Exists")
     })
   })
 })
@@ -38,11 +39,17 @@ router.post('/new', function(req,res,next){
 router.post('/login', function(req,res,next){
   var checkUser = { email: req.body.email}
   db.getUser(checkUser).then(function(returnedUsers){
+    if (returnedUsers.length === 0) {
+      res.status(403).send({ error: 'user not found'})
+      return
+    }
     var returnedUser = returnedUsers[0]
     var validPassword = bcrypt.compareSync(req.body.password, returnedUser.passwordHash);
     if (validPassword){
       req.session.userId = returnedUser.id
-      res.send({ name: returnedUser.fullName }) //sends the username once signed in
+      res.send({ name: returnedUser.fullName, photos: [] })
+    } else {
+      res.status(403).send({ error: 'invalid password'})
     }
   })
 })
@@ -74,7 +81,6 @@ router.post('/vote', function(req,res,next){
   } else {
     res.send({})
   }
-
 })
 
 module.exports = router;

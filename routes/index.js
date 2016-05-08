@@ -4,28 +4,17 @@ var db = require('../database/db');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index');
 });
 
 //if a user isn't logged in will return all photos, otherwise will return photos not voted on and not belonging to the user
 router.get('/getFeed', function(req, res, next) {
   if (req.session.userId){
-    db.getVotesByUserId({ id: req.session.userId })
+    db.getVotesByUserId({ userId: req.session.userId })
       .then(function(votes){
         db.getPhotos()
           .then(function(photos){
-            photos = photos.filter(function(photo){
-              if (photo.userId === req.session.userId) {
-                return false
-              }
-              var notVotedOn = false
-              votes.map(function(vote){
-                if (photo.id !== vote.photoId) {
-                  notVotedOn = true
-                }
-              })
-              return notVotedOn
-            })
+            photos = filterVotedOnPhotos(photos, votes)
             res.send(photos)
           })
       })
@@ -35,6 +24,18 @@ router.get('/getFeed', function(req, res, next) {
     })
   }
 })
+
+function filterVotedOnPhotos(photosArray, votesArray){
+  return photosArray.filter(function(photo){
+    var notVotedOn = true
+    votesArray.map(function(vote){
+      if (photo.id === vote.photoId) {
+        notVotedOn = false
+      }
+    })
+    return notVotedOn
+  })
+}
 
 //just gets locations that have got counts on them
 router.get('/locations', function(req,res,next){

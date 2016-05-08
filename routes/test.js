@@ -16,6 +16,7 @@ router.get('/sessionID', function(req,res,next){
 
 router.get('/getVotes', function(req,res,next){
   db.getVotes().then(function(result){
+
     res.send(result)
   })
 })
@@ -25,24 +26,13 @@ router.get('/test', function(req,res,next){
 })
 
 router.get('/feedByUser', function(req,res,next){
-  db.getVotesByUserId({ id: req.session.userId })
-    .then(function(votes){
-      db.getPhotos()
-        .then(function(photos){
-          photos = photos.filter(function(photo){
-            if (photo.userId === req.session.userId) {
-              return false
-            }
-            var notVotedOn = false
-            votes.map(function(vote){
-              if (photo.id !== vote.photoId) {
-                notVotedOn = true
-              }
-            })
-            return notVotedOn
-          })
-          res.send(photos)
-        })
+  req.session.userId = 1
+  db.getPhotosAndVotes()
+    .then(function(photos){
+      photos = photos.filter(function(photo){
+        return photo.userId !== req.session.userId
+      })
+      res.send(photos)
     })
 })
 module.exports = router;
