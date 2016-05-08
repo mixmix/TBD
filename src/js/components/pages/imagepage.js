@@ -30,7 +30,7 @@ export default class ImagePage extends Component{
     }
     fleekPhoto(id)
     // post to server
-    postVotes({photoid : id, vote : 1})
+    postVotes({photoId : id, vote : 1})
     // bring a new feed to show
     this.handleVote(feeds,id,history)
   }
@@ -42,7 +42,7 @@ export default class ImagePage extends Component{
     }
     passPhoto(id)
     // post to server
-    postVotes({photoid : id, vote : 0})
+    postVotes({photoId : id, vote : 0})
     // bring a new feed to show
     this.handleVote(feeds,id,history)
   }
@@ -73,16 +73,17 @@ export default class ImagePage extends Component{
    let {id}= this.props.params
    let {feeds} = this.props
    let feed = _.find(feeds,['id',Number(id)]);
+   let photoId = feed.id
    if(!feed){
      return(<h1>Loading</h1>)
    }
    return (
      <div className="single-view" ref="container">
       <Swipeable className="single-photo-wrapper"
-                 onSwipedRight={this.handleRight.bind(this, id)}
-                 onSwipedLeft={this.dislikePhoto.bind(this, id)}
-                 onSwipedDown={this.report.bind(this, id)}
-                 onSwipedUp={this.addToFavorites.bind(this, id)}
+                 onSwipedRight={this.handleRight.bind(this, photoId)}
+                 onSwipedLeft={this.dislikePhoto.bind(this, photoId)}
+                 onSwipedDown={this.report.bind(this, photoId)}
+                 onSwipedUp={this.addToFavorites.bind(this, photoId)}
                  preventDefaultTouchmoveEvent={false}
                  >
         <img src={feed.link} />
