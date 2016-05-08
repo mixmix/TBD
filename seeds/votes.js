@@ -4,9 +4,9 @@ exports.seed = function(knex, Promise) {
     knex('votes').del(),
 
     // Inserts seed entries
-    knex('votes').insert({id: 1, vote: 1, userId: 1, photoId: 1}),
-    knex('votes').insert({id: 2, vote: 1, userId: 2, photoId: 1}),
-    knex('votes').insert({id: 3, vote: 1, userId: 1, photoId: 3})
+    knex('votes').insert({vote: 1, userId: 1, photoId: 1}),
+    knex('votes').insert({vote: 1, userId: 2, photoId: 1}),
+    knex('votes').insert({vote: 1, userId: 1, photoId: 3})
 
   );
 };
