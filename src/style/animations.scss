@@ -1,0 +1,11 @@
+
+.slide-right {
+  transform-origin: 50% 99%;
+  animation: slideRight 1s infinite;
+}
+
+/* Standard syntax */
+@keyframes slideRight {
+    0%   {margin-left: 0px;}
+    100% {margin-left: 100%;}
+}

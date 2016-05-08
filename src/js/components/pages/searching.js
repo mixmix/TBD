@@ -20,12 +20,11 @@ export default class Searching extends Component{
   render(){
     return (
        <div className="searching">
-         <h1>{this.props.searchString}</h1>
          <ul className="possible-locations">
            {this.props.possibleLocations.filter((location) => {
              let term = location.name.substring(0, this.props.searchString.length)
              return (term === this.props.searchString)
-           }).map((location, i) => <li onClick={this.autofill.bind(this, {location})} key={i}>{location.name}</li>)}
+           }).map((location, i) => <li className="location-box" onClick={this.autofill.bind(this, {location})} key={i}>{location.name}</li>)}
          </ul>
        </div>
      )

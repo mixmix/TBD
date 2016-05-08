@@ -12,7 +12,16 @@ export default class ImagePage extends Component{
     let url='photo/'+(Number(id))
     history.replace(url)
   }
+
+  handleRight(id) {
+    document.querySelector('.single-view').classList.add('slide-right')
+    window.setTimeout(() => {
+      this.likePhoto(id)
+    }, 1000)
+  }
+
   likePhoto(id){
+    document.querySelector('.single-view').classList.remove('slide-right')
     let {fleekPhoto,history,feeds} = this.props
     // post to server
     postVotes({photoid : id, vote : 1})
@@ -72,6 +81,7 @@ export default class ImagePage extends Component{
     }
   }
  render(){
+   console.log(this.refs.container)
    let {id}= this.props.params
    let {feeds} = this.props
    let feed = _.find(feeds,['id',Number(id)]);
@@ -79,8 +89,9 @@ export default class ImagePage extends Component{
      return(<h1>Loading</h1>)
    }
    return (
-     <div>
-      <Swipeable onSwipedRight={this.likePhoto.bind(this, id)}
+     <div className="single-view" ref="container">
+      <Swipeable className="single-photo-wrapper"
+                 onSwipedRight={this.likePhoto.bind(this, id)}
                  onSwipedLeft={this.dislikePhoto.bind(this, id)}
                  onSwipedDown={this.report.bind(this, id)}
                  onSwipedUp={this.addToFavorites.bind(this, id)}
@@ -88,12 +99,11 @@ export default class ImagePage extends Component{
                  >
         <img src={feed.link} />
       </Swipeable>
-        <div>
-          <button onClick={this.dislikePhoto.bind(this,id)}>Pass</button>
-          <button onClick={this.likePhoto.bind(this,id)}>On Fleek</button>
-          <button onClick={this.followOwner.bind(this)}>Follow Me</button>
-
-        </div>
+      <div className="single-controls">
+        <button className="pass" onClick={this.dislikePhoto.bind(this,id)}>Pass</button>
+        <button className="fleek" onClick={this.handleRight.bind(this,id)}>On Fleek</button>
+        <button className="follow" onClick={this.followOwner.bind(this)}>Follow Me</button>
+      </div>
      </div>
    )
  }
