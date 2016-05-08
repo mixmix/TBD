@@ -29,7 +29,7 @@ node_modules
 # Optional npm cache directory
 .npm
 
-dev.sqlite3
+*.sqlite3
 
 # Optional REPL history
 .node_repl_history
