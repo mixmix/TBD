@@ -76,6 +76,7 @@ export default class ImagePage extends Component{
                  >
         <img src={feed.link} />
       </Swipeable>
+      <span>up</span><span>down</span><span>left</span><span>right</span>
         <div>
           <button onClick={this.dislikePhoto.bind(this,id)}>Pass</button>
           <button onClick={this.likePhoto.bind(this,id)}>On Fleek</button>

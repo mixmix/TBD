@@ -44,9 +44,17 @@ const postSignin =(url,userInfo,history,cb) =>{
          })
 }
 
+const loadFeeds = (dispatch) =>{
+  request.get('/getFeed')
+         .end((err,feeds)=>{
+           feeds=JSON.parse(feeds.text)
+           dispatch({type:'LOAD_FEEDS',feeds})
+         })
+}
 
 export {
   postVotes,
   postNewFeed,
-  postSignin
+  postSignin,
+  loadFeeds
 }
