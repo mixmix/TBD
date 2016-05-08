@@ -86,7 +86,7 @@ router.post('/vote', function(req,res,next){
   }
 })
 
-router.get('/photos', function(req, res, next){
+router.get('/getUserPhotos', function(req, res, next){
   if(req.session.userId){
     db.getPhotosByUserId(req.session.userId)
       .then(function(photos){
