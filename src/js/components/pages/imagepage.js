@@ -5,32 +5,40 @@ import _                 from 'lodash'
 import * as actions from '../../actions'
 import {postVotes}  from '../../reducers'
 
+import Swipeable from 'react-swipeable'
+
 export default class ImagePage extends Component{
   nextPhoto(history,id){
     let url='photo/'+(Number(id))
     history.replace(url)
   }
   likePhoto(id){
-    let {fleekPhoto,history,feeds} = this.props
+    let {fleekPhoto,history,feeds,user} = this.props
+    if(user.name === 'visitor'){
+      history.push('login')
+      return ;
+    }
+    fleekPhoto(id)
     // post to server
     postVotes({photoid : id, vote : 1})
-
-    let currentIndex= _.findIndex(feeds,['id',id])
-    let nextFeed= feeds[currentIndex+1]
-    // show next photo
-    if(nextFeed){
-      this.nextPhoto(history,nextFeed.id)
-    }else{
-      // ask server for more feeds
-    }
+    // bring a new feed to show
+    this.handleVote(feeds,id,history)
   }
   dislikePhoto(id){
-    let {passPhoto,history,feeds} = this.props
+    let {passPhoto,history,feeds,user} = this.props
+    if(user.name === 'visitor'){
+      history.push('login')
+      return ;
+    }
+    passPhoto(id)
     // post to server
     postVotes({photoid : id, vote : 0})
-
+    // bring a new feed to show
+    this.handleVote(feeds,id,history)
+  }
+  handleVote(feeds, id,history){
     let currentIndex= _.findIndex(feeds,['id',Number(id)])
-    let nextFeed= feeds[currentIndex+1]? feeds[currentIndex+1] : feeds[0]
+    let nextFeed= feeds[currentIndex+1]
     // show next photo
     if(nextFeed){
       this.nextPhoto(history,nextFeed.id)
@@ -41,6 +49,34 @@ export default class ImagePage extends Component{
   followOwner(){
     // darken color of this button, and post to server
   }
+  report(id){
+    //report inappropriate photo
+    console.log('Swiped down')
+
+    let {history, feeds} = this.props
+    let currentIndex= _.findIndex(feeds,['id',Number(id)])
+    let nextFeed= feeds[currentIndex+1]
+    // show next photo
+    if(nextFeed){
+      this.nextPhoto(history,nextFeed.id)
+    }else{
+      // ask server for more feeds
+    }
+  }
+  addToFavorites(id){
+    //add photo to favorites for future viewing
+    console.log('Added to favorites')
+
+    let {history, feeds} = this.props
+    let currentIndex= _.findIndex(feeds,['id',Number(id)])
+    let nextFeed= feeds[currentIndex+1]
+    // show next photo
+    if(nextFeed){
+      this.nextPhoto(history,nextFeed.id)
+    }else{
+      // ask server for more feeds
+    }
+  }
  render(){
    let {id}= this.props.params
    let {feeds} = this.props
@@ -50,7 +86,14 @@ export default class ImagePage extends Component{
    }
    return (
      <div>
+      <Swipeable onSwipedRight={this.likePhoto.bind(this, id)}
+                 onSwipedLeft={this.dislikePhoto.bind(this, id)}
+                 onSwipedDown={this.report.bind(this, id)}
+                 onSwipedUp={this.addToFavorites.bind(this, id)}
+                 preventDefaultTouchmoveEvent={false}
+                 >
         <img src={feed.link} />
+      </Swipeable>
         <div>
           <button onClick={this.dislikePhoto.bind(this,id)}>Pass</button>
           <button onClick={this.likePhoto.bind(this,id)}>On Fleek</button>
@@ -65,14 +108,26 @@ export default class ImagePage extends Component{
 
 const mapStateToProps = (state) => {
   return {
-    feeds : state.feeds
+    feeds : state.feeds,
+    user : state.user
   }
 }
 
+const mapDispatcherToProps =(dispatch) => {
+  return {
+    fleekPhoto: (id) =>{
+      dispatch(actions._fleekPhoto(id))
+    },
+    passPhoto: (id) =>{
+      dispatch(actions._passPhoto(id))
+    }
+  }
+}
 
 // export for test
 export {ImagePage}
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatcherToProps
 )(ImagePage)

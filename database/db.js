@@ -83,5 +83,8 @@ module.exports = {
   },
   getPhotosByDateNotVotedOn: function(){
     return knex('photos').crossJoin('votes', 'photos.id', 'votes.photoId')
+  },
+  getVotesByUserId: function(user) {
+    return knex('votes').where(user)
   }
 }
