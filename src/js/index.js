@@ -54,11 +54,11 @@ class App extends Component{
        <Router history={history}>
          <Route path="/" component={Layout}>
            <IndexRoute component={Feedcontainer}></IndexRoute>
-           <Route path="photo/:id" component={Imagepage}></Route>
-           <Route path="profile" component={Profile}></Route>
-           <Route path='location' component={Location}></Route>
-           <Route path='login' component={Login}></Route>
-           <Route path='upload' component={Upload}></Route>
+           <Route path="/photo/:id" component={Imagepage}></Route>
+           <Route path="/profile" component={Profile}></Route>
+           <Route path='/location' component={Location}></Route>
+           <Route path='/login' component={Login}></Route>
+           <Route path='/upload' component={Upload}></Route>
          </Route>
        </Router>
      </Provider>

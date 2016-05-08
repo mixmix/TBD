@@ -11,6 +11,8 @@
 @import './upload.scss';
 @import "./singlepage.scss";
 @import './settings-bar.scss';
+@import './location.scss';
+@import './animations.scss';
 
 * {
   box-sizing: border-box;
@@ -22,6 +24,7 @@
   height: 90vh;
   overflow-y: scroll;
   overflow-x: hidden;
+  position: relative;
 }
 
 body {

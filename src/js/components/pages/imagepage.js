@@ -9,10 +9,20 @@ import Swipeable from 'react-swipeable'
 
 export default class ImagePage extends Component{
   nextPhoto(history,id){
-    let url='photo/'+(Number(id))
+    let url='/photo/'+(Number(id))
     history.replace(url)
   }
+
+  handleRight(id) {
+    document.querySelector('.single-view').classList.add('slide-right')
+    let timerID = window.setTimeout(() => {
+      this.likePhoto(id)
+    }, 300)
+  }
+
   likePhoto(id){
+    document.querySelector('.single-view').classList.remove('slide-right')
+    window.clearTimeout("timerID")
     let {fleekPhoto,history,feeds,user} = this.props
     if(user.name === 'visitor'){
       history.push('login')
@@ -67,8 +77,9 @@ export default class ImagePage extends Component{
      return(<h1>Loading</h1>)
    }
    return (
-     <div>
-      <Swipeable onSwipedRight={this.likePhoto.bind(this, id)}
+     <div className="single-view" ref="container">
+      <Swipeable className="single-photo-wrapper"
+                 onSwipedRight={this.handleRight.bind(this, id)}
                  onSwipedLeft={this.dislikePhoto.bind(this, id)}
                  onSwipedDown={this.report.bind(this, id)}
                  onSwipedUp={this.addToFavorites.bind(this, id)}
@@ -77,7 +88,7 @@ export default class ImagePage extends Component{
         <img src={feed.link} />
       </Swipeable>
       <span>up</span><span>down</span><span>left</span><span>right</span>
-        <div>
+        <div className="single-controls">
           <button onClick={this.dislikePhoto.bind(this,id)}>Pass</button>
           <button onClick={this.likePhoto.bind(this,id)}>On Fleek</button>
           <button onClick={this.followOwner.bind(this)}>Follow Me</button>

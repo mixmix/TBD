@@ -5,7 +5,10 @@ class Profile extends Component{
  render(){
    var {photos,name,content}= this.props.user
    content = photos.length>0 ? photos.map((photo)=>{
-     return <img src='photo' />
+     return <div key={photo.id}>
+                <img src={photo.link} />
+                <h3>votes:{photo.rating>0? photo.rating : 'looks all good'}</h3>
+            </div>
    }) : <h3>You dont have any photos yet...</h3>;
    return (
      <div>

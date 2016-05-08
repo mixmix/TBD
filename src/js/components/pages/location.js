@@ -53,6 +53,7 @@ class Location extends Component{
               onChange={this.handleInputChange.bind(this)}
               type="search"
               placeholder="location"
+              className="searchbar"
           />
           </div>
           <div className="feed-container">
