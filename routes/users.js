@@ -47,7 +47,10 @@ router.post('/login', function(req,res,next){
     var validPassword = bcrypt.compareSync(req.body.password, returnedUser.passwordHash);
     if (validPassword){
       req.session.userId = returnedUser.id
-      res.send({ name: returnedUser.fullName, photos: [] })
+      db.getPhotosByUserId(req.session.userId)
+        .then(function(photos){
+          res.send({ name: returnedUser.fullName, photos: photos })
+        })
     } else {
       res.status(403).send({ error: 'invalid password'})
     }
