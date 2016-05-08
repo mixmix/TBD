@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
     table.integer('userId');
     table.integer('photoId');
     table.timestamps();
+    table.unique(['photoId', 'userId'])
   })
 };
 

@@ -28,7 +28,7 @@ router.post('/new', function(req,res,next){
     var newUser = { fullName: user.fullName, email: user.email, passwordHash: passwordHash, styleRating: 0, connoisseurRating: 0 }
     db.createUser(newUser).then(function(result){
       req.session.userId = result[0] //saves the user id returned from the new user created to the session
-      res.send({ name: result[0].fullName, photos: [] })
+      res.send({ name: user.fullName, photos: [] })
     }).catch(function(error){
       res.status(500).send("ERROR User Exists")
     })
@@ -76,10 +76,24 @@ router.post('/vote', function(req,res,next){
     var vote = { vote: req.body.vote, photoId: req.body.photoId, userId: req.session.userId}
     db.postVote(vote)
       .then(function(result){
-        res.send(result)
+        res.send({ message: "success" })
+      })
+      .catch(function(error){
+        res.status(400).send(error)
       })
   } else {
-    res.send({})
+    res.status(400).send({})
+  }
+})
+
+router.get('/photos', function(req, res, next){
+  if(req.session.userId){
+    db.getPhotosByUserId(req.session.userId)
+      .then(function(photos){
+        res.send(photos)
+      })
+  } else {
+    res.status(400).send({})
   }
 })
 
