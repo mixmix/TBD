@@ -28,7 +28,7 @@ module.exports = {
           }
         })
   },
-  getVotes: function() {
+  getVotes: function() { //gets all votes
     return knex('votes')
   },
   getUserPhotos: function(user){
@@ -84,7 +84,7 @@ module.exports = {
   getPhotosByDateNotVotedOn: function(){
     return knex('photos').crossJoin('votes', 'photos.id', 'votes.photoId')
   },
-  getVotesByUserId: function(user){
+  getVotesByUserId: function(user) {
     return knex('votes').where(user)
   }
 }
