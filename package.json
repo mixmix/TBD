@@ -6,7 +6,8 @@
     "test": "mocha test/.setup.js test/**/**/*.js",
     "dev": "webpack-dev-server --content-base public/",
     "start": "node ./bin/www",
-    "lint": "eslint ./seeds/users.js"
+    "lint": "eslint ./seeds/users.js",
+    "test:api": "mocha test/database/api_persist_unit_test.js"
   },
   "dependencies": {
     "babel-loader": "6.2.0",

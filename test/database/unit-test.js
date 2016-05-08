@@ -38,7 +38,7 @@ describe('Database', function() {
     it('should return photos sorted by date', function(done) {
       db.getPhotosByDate()
         .then(function(result) {
-        expect(result.length).to.be.equal(4)
+        expect(result.length).to.be.equal(6)
         done()
       })
     })

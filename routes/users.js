@@ -77,10 +77,24 @@ router.post('/vote', function(req,res,next){
     var vote = { vote: req.body.vote, photoId: req.body.photoId, userId: req.session.userId}
     db.postVote(vote)
       .then(function(result){
-        res.send(result)
+        res.send({ message: "success" })
+      })
+      .catch(function(error){
+        res.status(400).send(error)
       })
   } else {
-    res.send({})
+    res.status(400).send({})
+  }
+})
+
+router.get('/getUserPhotos', function(req, res, next){
+  if(req.session.userId){
+    db.getPhotosByUserId(req.session.userId)
+      .then(function(photos){
+        res.send(photos)
+      })
+  } else {
+    res.status(400).send({})
   }
 })
 
