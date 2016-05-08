@@ -1,6 +1,6 @@
 {
-  "name": "TBD",
-  "version": "0.0.0",
+  "name": "tbd",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "test": "mocha test/.setup.js test/**/**/*.js",
@@ -76,5 +76,14 @@
     "supertest": "^1.2.0",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
+  },
+  "description": "Style app to help users look their best",
+  "main": ".eslintrc.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrew-travis-wadman/TBD.git"
   }
 }
