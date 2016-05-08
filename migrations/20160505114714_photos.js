@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.integer('countryId');
     table.integer('cityId');
-    table.string('link');
+    table.string('link').notNullable();
     table.string('caption');
     table.integer('userId');
     table.integer('categoryId');

@@ -10,7 +10,6 @@ router.get('/', function(req, res, next) {
 //if a user isn't logged in will return all photos, otherwise will return photos not voted on and not belonging to the user
 router.get('/getFeed', function(req, res, next) {
   if (req.session.userId){
-    console.log('signed in')
     db.getVotesByUserId({ userId: req.session.userId })
       .then(function(votes){
         db.getPhotos()
