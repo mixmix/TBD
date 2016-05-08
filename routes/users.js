@@ -28,7 +28,7 @@ router.post('/new', function(req,res,next){
     var newUser = { fullName: user.fullName, email: user.email, passwordHash: passwordHash, styleRating: 0, connoisseurRating: 0 }
     db.createUser(newUser).then(function(result){
       req.session.userId = result[0] //saves the user id returned from the new user created to the session
-      res.send({ name: result[0].fullName, photos: [] })
+      res.send({ name: user.fullName, photos: [] })
     }).catch(function(error){
       res.status(500).send("ERROR User Exists")
     })

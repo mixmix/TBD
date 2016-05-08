@@ -37,6 +37,7 @@ const postSignin =(url,userInfo,history,cb) =>{
              console.log('login err',err)
            }else{
              user=JSON.parse(user.text)
+             console.log('after sign up',user)
              cb(user)
              history.push('/')
            }
