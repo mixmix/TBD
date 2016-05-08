@@ -34,18 +34,27 @@ const postSignin =(url,userInfo,history,cb) =>{
          .send(userInfo)
          .end((err,user)=>{
            if(err){
-             console.log('login err')
+             console.log('login err',err)
            }else{
              user=JSON.parse(user.text)
+             console.log('after sign up',user)
              cb(user)
              history.push('/')
            }
          })
 }
 
+const loadFeeds = (dispatch) =>{
+  request.get('/getFeed')
+         .end((err,feeds)=>{
+           feeds=JSON.parse(feeds.text)
+           dispatch({type:'LOAD_FEEDS',feeds})
+         })
+}
 
 export {
   postVotes,
   postNewFeed,
-  postSignin
+  postSignin,
+  loadFeeds
 }

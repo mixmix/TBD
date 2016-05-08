@@ -9,7 +9,7 @@ import { syncHistoryWithStore} from 'react-router-redux'
 import { createStore }         from 'redux'
 import request                 from 'superagent'
 //import the reducer
-import reducer        from './reducers'
+import reducer,{loadFeeds}     from './reducers'
 import { _updatePossibleLocations } from './actions'
 //import the components
 import Layout         from './components/pages/layout'
@@ -25,12 +25,9 @@ const history = syncHistoryWithStore(hashHistory, store)
 
 class App extends Component{
  componentDidMount(){
-   $.cloudinary.config({ cloud_name: 'vicken', api_key: '226983578886724'})
-   request.get('/getFeed')
-          .end((err,feeds)=>{
-            feeds=JSON.parse(feeds.text)
-            store.dispatch({type:'LOAD_FEEDS',feeds})
-          })
+
+   loadFeeds(store.dispatch)
+
    request.get('/getCategories')
           .end((err,categories) => {
             categories= JSON.parse(categories.text)
