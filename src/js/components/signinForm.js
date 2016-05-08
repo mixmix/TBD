@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
-import request           from 'superagent'
-import { connect } from 'react-redux'
+import {postSignin}      from '../reducers'
+import { connect }       from 'react-redux'
 
 class Signin extends Component{
  handleLogin(e){
@@ -8,17 +8,7 @@ class Signin extends Component{
    let email = this.refs.email.value
    let password= this.refs.password.value
    let {successLogin,history} = this.props
-   request.post('/users/login')
-          .send({email,password})
-          .end((err,user)=>{
-            if(err){
-              console.log('login err')
-            }else{
-              user=JSON.parse(user.text)
-              successLogin(user)
-              history.push('/')
-            }
-          })
+   postSignin('/users/login',{email,password},history,successLogin)
  }
  render(){
    return (
@@ -48,3 +38,5 @@ const mapDispatchToProps= (dispatch) =>{
 }
 
 export default connect(null,mapDispatchToProps)(Signin)
+
+export {Signin}

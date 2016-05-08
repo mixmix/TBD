@@ -13,24 +13,30 @@ export default class ImagePage extends Component{
     history.replace(url)
   }
   likePhoto(id){
-    let {fleekPhoto,history,feeds} = this.props
+    let {fleekPhoto,history,feeds,user} = this.props
+    if(user.name === 'visitor'){
+      history.push('login')
+      return ;
+    }
+    fleekPhoto(id)
     // post to server
     postVotes({photoid : id, vote : 1})
-
-    let currentIndex= _.findIndex(feeds,['id',Number(id)])
-    let nextFeed= feeds[currentIndex+1]? feeds[currentIndex+1] : feeds[0]
-    // show next photo
-    if(nextFeed){
-      this.nextPhoto(history,nextFeed.id)
-    }else{
-      // ask server for more feeds
-    }
+    // bring a new feed to show
+    this.handleVote(feeds,id,history)
   }
   dislikePhoto(id){
-    let {passPhoto,history,feeds} = this.props
+    let {passPhoto,history,feeds,user} = this.props
+    if(user.name === 'visitor'){
+      history.push('login')
+      return ;
+    }
+    passPhoto(id)
     // post to server
     postVotes({photoid : id, vote : 0})
-
+    // bring a new feed to show
+    this.handleVote(feeds,id,history)
+  }
+  handleVote(feeds, id,history){
     let currentIndex= _.findIndex(feeds,['id',Number(id)])
     let nextFeed= feeds[currentIndex+1]
     // show next photo
@@ -102,14 +108,26 @@ export default class ImagePage extends Component{
 
 const mapStateToProps = (state) => {
   return {
-    feeds : state.feeds
+    feeds : state.feeds,
+    user : state.user
   }
 }
 
+const mapDispatcherToProps =(dispatch) => {
+  return {
+    fleekPhoto: (id) =>{
+      dispatch(actions._fleekPhoto(id))
+    },
+    passPhoto: (id) =>{
+      dispatch(actions._passPhoto(id))
+    }
+  }
+}
 
 // export for test
 export {ImagePage}
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatcherToProps
 )(ImagePage)
