@@ -18,11 +18,11 @@ class Signin extends Component{
           <input type="email" name="emal" ref='email' required/><br/>
           <label>Password:</label>
           <input type="password" name="password" ref='password' required/>
-          <button onClick={this.handleLogin.bind(this)} type='submit'>Log In</button>
+          <button className="btn" onClick={this.handleLogin.bind(this)} type='submit'>Log In</button>
         </form>
-        <div class="sign-ins">
-          <a href='auth/facebook'>facebook</a>
-          <a href='auth/instagram'>instagram</a>
+        <div class="auth">
+          <a href='auth/facebook'><div className="link-logo"><img src='images/fb.png' /></div></a>
+          <a href='auth/instagram'><div className="link-logo"><img src='images/instagram.png' /></div></a>
         </div>
      </div>
    )

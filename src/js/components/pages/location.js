@@ -52,7 +52,7 @@ class Location extends Component{
               value={this.props.filter.searchString}
               onChange={this.handleInputChange.bind(this)}
               type="search"
-              placeholder="location"
+              placeholder="Search..."
               className="searchbar"
           />
           </div>

@@ -17,10 +17,10 @@ export default class Login extends Component{
  render(){
    let button, form;
    if(this.state.toggleLogInorOut){
-     button= <button onClick={this.handleClick.bind(this)}>Sign Up</button>
+     button= <button className="btn toggle" onClick={this.handleClick.bind(this)}>Sign Up</button>
      form= <Signin history={this.props.history}/>
    }else{
-     button= <button onClick={this.handleClick.bind(this)}>Sign In</button>
+     button= <button className="btn toggle" onClick={this.handleClick.bind(this)}>Sign In</button>
      form= <Signup history={this.props.history}/>
    }
    return (

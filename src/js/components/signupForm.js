@@ -20,7 +20,7 @@ class Signup extends Component{
        <input type="email" name="emal" ref='email' required/><br/>
        <label>Password:</label>
        <input type="password" name="password" ref='password' required/>
-       <button onClick={this.handleSignup.bind(this)} type='submit'>Sign Up</button>
+       <button className="btn" onClick={this.handleSignup.bind(this)} type='submit'>Sign Up</button>
      </form>
    )
  }

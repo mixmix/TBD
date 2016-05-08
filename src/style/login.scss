@@ -3,14 +3,19 @@
   flex-direction: column;
   width: 100%;
 
-  button {
-    background: $blue;
-    border: none;
-    border-radius: 5px;
-    color: $light;
-    margin-top: 2vh;
-    padding: 10px 15px;
+  .btn {
+    margin-top: 5vh;
+    padding: 8px 15px;
   }
+
+  .link-logo {
+    max-width: 10vw;
+
+    img{
+      width: 100%;
+    }
+  }
+
 
   .logo {
     width: 80vw;
@@ -34,7 +39,7 @@
 
   label, button, input {
     font-family: $sans;
-    font-size: 1.5em;
+    font-size: 1.2em;
   }
 
   input {
@@ -49,11 +54,17 @@
     flex-direction: column;
   }
 
-  .sign-ins {
+  .auth, .sign-ins {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     margin: 0 10vh;
+
+    .link-logo {
+      max-width: 10vw;
+    }
   }
+
+
 
 }
