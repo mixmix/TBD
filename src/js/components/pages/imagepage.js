@@ -15,13 +15,14 @@ export default class ImagePage extends Component{
 
   handleRight(id) {
     document.querySelector('.single-view').classList.add('slide-right')
-    window.setTimeout(() => {
+    let timerID = window.setTimeout(() => {
       this.likePhoto(id)
-    }, 1000)
+    }, 300)
   }
 
   likePhoto(id){
     document.querySelector('.single-view').classList.remove('slide-right')
+    window.clearTimeout("timerID")
     let {fleekPhoto,history,feeds} = this.props
     // post to server
     postVotes({photoid : id, vote : 1})
@@ -81,7 +82,6 @@ export default class ImagePage extends Component{
     }
   }
  render(){
-   console.log(this.refs.container)
    let {id}= this.props.params
    let {feeds} = this.props
    let feed = _.find(feeds,['id',Number(id)]);
@@ -91,7 +91,7 @@ export default class ImagePage extends Component{
    return (
      <div className="single-view" ref="container">
       <Swipeable className="single-photo-wrapper"
-                 onSwipedRight={this.likePhoto.bind(this, id)}
+                 onSwipedRight={this.handleRight.bind(this, id)}
                  onSwipedLeft={this.dislikePhoto.bind(this, id)}
                  onSwipedDown={this.report.bind(this, id)}
                  onSwipedUp={this.addToFavorites.bind(this, id)}
@@ -101,7 +101,7 @@ export default class ImagePage extends Component{
       </Swipeable>
       <div className="single-controls">
         <button className="pass" onClick={this.dislikePhoto.bind(this,id)}>Pass</button>
-        <button className="fleek" onClick={this.handleRight.bind(this,id)}>On Fleek</button>
+        <button className="fleek" onClick={this.likePhoto.bind(this,id)}>On Fleek</button>
         <button className="follow" onClick={this.followOwner.bind(this)}>Follow Me</button>
       </div>
      </div>
