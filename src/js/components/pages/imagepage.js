@@ -14,6 +14,7 @@ export default class ImagePage extends Component{
   }
 
   handleRight(id) {
+    //change to be state change
     document.querySelector('.single-view').classList.add('slide-right')
     let timerID = window.setTimeout(() => {
       this.likePhoto(id)
@@ -119,11 +120,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatcherToProps =(dispatch) => {
   return {
-    fleekPhoto: (id) =>{
-      dispatch(actions._fleekPhoto(id))
-    },
+    fleekPhoto: id => dispatch(actions.fleekPhoto(id)),
     passPhoto: (id) =>{
-      dispatch(actions._passPhoto(id))
+      dispatch(actions.passPhoto(id))
     }
   }
 }

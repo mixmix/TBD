@@ -3,6 +3,7 @@ var knexConfig = require(__dirname + '/../knexfile');
 
 var knex = Knex(knexConfig[process.env.NODE_ENV || 'development'])
 
+// get ride of ununsed methods here
 module.exports = {
   getUsers: function() { //not needed for production
     return knex.select().table('users')
@@ -13,17 +14,19 @@ module.exports = {
   getPhotosByDate: function() { //gets all photos by date
     return knex.select().table('photos').limit(50).orderBy('created_at','desc')
   },
-  findOrCreate: function(user, cb){ //finds or create photos
-      knex('users').where(user)
+
+  // don't mix callbacks and promises
+  // make two functions a find and a create, then roll then together here
+  findOrCreate: function(user){ //finds or create photos
+      return knex('users').where(user)
         .then(function(result){
           if (result.length > 0) {
-            cb(result[0])
+            cb(result[0]) // something
           } else {
             knex('users')
               .insert(Object.assign({},user, {styleRating: 0, connoisseurRating: 0}))
               .then(function(result){
-                knex('users').where(user)
-                  .then(function(resultUser){ cb(resultUser)})
+                return knex('users').where({id: result.id})
               })
           }
         })

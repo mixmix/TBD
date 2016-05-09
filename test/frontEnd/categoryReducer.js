@@ -1,3 +1,4 @@
+// put this in a reducers/ folder
 import categories from '../../src/js/reducers/categories'
 
 import {expect} from 'chai'

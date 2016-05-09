@@ -3,7 +3,7 @@ import Nav from '../nav'
 
 export default class Layout extends Component{
  render(){
-   let {location}= this.props
+   const {location}= this.props
    return (
      <div>
        <Nav location={location}/>

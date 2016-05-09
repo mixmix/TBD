@@ -4,19 +4,22 @@ import {postNewFeed}     from '../../reducers'
 import {_newPhoto}       from '../../actions'
 
 class Upload extends Component{
- constructor(){
-   super()
-   this.state={
-     id:0,
-     category: ''
-   }
+  constructor(){
+    super()
+    this.state={
+      id:0,
+      category: ''
+    }
+  }
+  componentDidMount(){
+    // do this react way , don't use JQuery
+    // let react do dom manipulation
+    // there is this https://www.npmjs.com/package/cloudinary
+    $('#upload').append($.cloudinary.unsigned_upload_tag("vfcanmwr",{ cloud_name: 'vicken' }))
+                .bind('cloudinarydone', this.afterSavetoCloudinary.bind(this))
+                .bind('cloudinaryprogress', this.uploadProgress);
  }
- componentDidMount(){
-     $('#upload').append($.cloudinary.unsigned_upload_tag("vfcanmwr",{ cloud_name: 'vicken' }))
-                 .bind('cloudinarydone', this.afterSavetoCloudinary.bind(this))
-                 .bind('cloudinaryprogress', this.uploadProgress);
- }
- afterSavetoCloudinary(e,data){
+  afterSavetoCloudinary(e,data){
      let that=this
      var url = data.result.secure_url
      $('#preview').attr('src', url)
@@ -36,23 +39,25 @@ class Upload extends Component{
  uploadProgress(e,data){
    var percent= Math.round((data.loaded * 100.0) / data.total) + '%' ;
    $('.progress_bar').css('width',percent).html(percent);
+   // do with state
  }
- handleChangeCtg(e){
+ updateCategoryState(e){  // use Category on Ctg
    this.setState({...this.state, id : e.target.value})
  }
  handleChangeLct(e){
    this.setState({...this.state, category : e.target.value})
  }
  render(){
-    let divStyle = {
-      backgroundColor: 'green',
-      height: '20px',
-      width: '0px'
-    };
-    let options = this.props.categories.length>0 ?
-    this.props.categories.map((category,i)=>{
-      return <option value={category.id} key={i}>{category.category}</option>
-    }) : '';
+   const divStyle = {
+     backgroundColor: 'green',
+     height: '20px',
+     width: '0px'
+   };
+
+   let options = this.props.categories.map((category,i)=>{
+     return <option value={category.id} key={i}>{category.category}</option>
+   }) 
+
    return (
      <div id='uploadpage'>
        <form id='upload'>

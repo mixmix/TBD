@@ -1,6 +1,6 @@
 require('dotenv').config();
+var nodeEnv = process.env.NODE_ENV 
 var path = require('path');
-var db = require('./database/db');
 //express
 var express = require('express');
 //var favicon = require('serve-favicon');
@@ -12,27 +12,26 @@ var session = require('express-session')
 //knex
 var Knex = require('knex');
 var knexConfig = require(__dirname + '/knexfile');
-var knex = Knex(knexConfig[process.env.NODE_ENV || 'development']);
+var knex = Knex(knexConfig[ nodeEnv || 'development']);
 
 //passport
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook');
 var InstagramStrategy = require('passport-instagram');
 
+var db = require('./database/db');
+
 //routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
 var test = require('./routes/test');
-var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+var app = express();
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+app.use(logger('dev'));  // whats dev ?    process.env.NODE_ENV
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -40,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //session initialisation
 app.use(session({
-  secret: 'This is a secret!',
+  secret: 'This is a secret!',  // env var
   saveUninitialized: true,
   resave: true,
   db: knex,
@@ -60,11 +59,12 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     var user = profile
-    var checkUser = {}
-    checkUser.fullName = user.displayName
-    checkUser.email = user.emails[0].value
-    checkUser.fbId = user.id
-    db.findOrCreate(checkUser, function(returnedUser){
+    var checkUser = {
+      fullName: user.displayName,
+      email:    user.emails[0].value,
+      fbId:     user.id
+    }
+    db.findOrCreate(checkUser, function(returnedUser){   // promise this then
       user.dbid = returnedUser.id
       return cb(null, user)
     })
@@ -82,7 +82,7 @@ passport.use(new InstagramStrategy({
     var checkUser = {}
     checkUser.fullName = user.displayName
     checkUser.igId = user.id
-    db.findOrCreate(checkUser, function(returnedUser){
+    db.findOrCreate(checkUser, function(returnedUser){  //.then
       user.dbid = returnedUser.id
       return cb(null, user)
     })
@@ -90,53 +90,24 @@ passport.use(new InstagramStrategy({
 ));
 
 passport.serializeUser(function(user, cb) {
+  // find the userId (our app one) and serialize that
   cb(null, user);
 });
 
 passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
+  // console.log
+  // look up user based on userId
+  cb(null, fullUserObj);
 });
 
 //routing
 app.use('/', routes);
 app.use('/users', users);
 app.use('/auth', auth)
-app.use('/test', test)
+//app.use('/test', test)   dev thing ? 
 app.get('*', function (request, response){
   response.sendFile(path.resolve(__dirname, './public', 'index.html'))
 })
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
-
-
 module.exports = app;
+

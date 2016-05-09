@@ -4,16 +4,19 @@ import {expect} from 'chai'
 let assert = require('chai').assert;
 
 describe('feeds reducer',() => {
-  it('default return previous state', () =>{
-    const initState = []
+  it('returns unchanged state if action-type not found', () =>{
+    const initState = []   // arrange
     const data = [{
       id: 1,
       category: "street"
     }]
-    expect(feeds(initState,{
-      type:'LOAD_SOMERUM',
+ 
+    const reducedState = feeds(initState,{  // aciton
+      type:'NOT_A_REAL_ACTION_RUMMM!!',
       feeds : data
-    })).to.deep.equal(initState)
+    }))
+
+    expect(reducedState.to.deep.equal(initState) // assert
   })
 
   it('LOAD FEEDS FROM SERVER', () =>{

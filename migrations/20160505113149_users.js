@@ -4,10 +4,10 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('fullName').notNullable();
     table.string('email').unique();
-    table.string('profilePicture');
+    table.string('profileUrl');
     table.string('passwordHash');
     table.integer('styleRating');
-    table.integer('connoisseurRating');
+    table.integer('connoisseurRating'); // hard to spell
     table.biginteger('fbId');
     table.biginteger('igId');
   })

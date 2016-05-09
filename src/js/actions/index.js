@@ -1,4 +1,6 @@
 
+// drop _'s 
+//
 const _updatePossibleLocations = (locations) => {
   return {
     type: 'UPDATE_POSSIBLE_LOCATIONS',

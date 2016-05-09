@@ -15,6 +15,8 @@ export default function (state=initialState, action){
     }
 
     case 'UPDATE_POSSIBLE_LOCATIONS': {
+      // comes from an async call
+      // future : could check out redux-loop
       return Object.assign({}, _.set(state, 'possibleLocations', action.possibleLocations))
     }
 

@@ -4,7 +4,11 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('code');
     table.string('name');
-    table.integer('count').defaultTo(0)
+    table.integer('count').defaultTo(0) // not needed I think ?
+
+    //knex('countries').join('photos').count()
+    //groups photos by countries and count them
+    //
   })
 };
 

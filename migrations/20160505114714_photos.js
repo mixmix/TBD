@@ -6,9 +6,9 @@ exports.up = function(knex, Promise) {
     table.integer('cityId');
     table.string('link').notNullable();
     table.string('caption');
-    table.integer('userId');
-    table.integer('categoryId');
-    table.integer('rating');
+    table.integer('userId').notNullable()
+    table.integer('categoryId').notNullable
+    table.integer('rating'); // this is computed ...
     table.timestamps();
   })
 };
